@@ -1,0 +1,264 @@
+/* SweetAlert2 Dark Theme Styles */
+
+/* Main popup styling */
+.swal-dark-popup {
+  border: 1px solid #4B5563 !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Title styling */
+.swal-dark-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 1.25rem !important;
+}
+
+/* Content text styling */
+.swal-dark-content {
+  color: #D1D5DB !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+}
+
+/* Confirm button styling */
+.swal-dark-confirm {
+  background-color: #EC4899 !important;
+  border: none !important;
+  border-radius: 0.375rem !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.swal-dark-confirm:hover {
+  background-color: #DB2777 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4) !important;
+}
+
+.swal-dark-confirm:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.3) !important;
+}
+
+/* Cancel button styling */
+.swal-dark-cancel {
+  background-color: #6B7280 !important;
+  border: none !important;
+  border-radius: 0.375rem !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.swal-dark-cancel:hover {
+  background-color: #4B5563 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(107, 114, 128, 0.4) !important;
+}
+
+.swal-dark-cancel:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.3) !important;
+}
+
+/* Icon styling */
+.swal2-icon {
+  border: none !important;
+}
+
+.swal2-icon.swal2-success {
+  color: #10B981 !important;
+}
+
+.swal2-icon.swal2-error {
+  color: #EF4444 !important;
+}
+
+.swal2-icon.swal2-warning {
+  color: #F59E0B !important;
+}
+
+.swal2-icon.swal2-info {
+  color: #3B82F6 !important;
+}
+
+.swal2-icon.swal2-question {
+  color: #8B5CF6 !important;
+}
+
+/* Loading spinner styling */
+.swal2-loading .swal2-styled {
+  background-color: transparent !important;
+}
+
+.swal2-loader {
+  border-color: #EC4899 transparent #EC4899 transparent !important;
+}
+
+/* Progress bar for timer */
+.swal2-timer-progress-bar {
+  background-color: #EC4899 !important;
+}
+
+/* Toast specific styling */
+.swal2-toast {
+  background-color: #374151 !important;
+  border: 1px solid #4B5563 !important;
+  color: #ffffff !important;
+}
+
+.swal2-toast .swal2-title {
+  color: #ffffff !important;
+  font-size: 0.875rem !important;
+}
+
+.swal2-toast .swal2-icon {
+  margin: 0 0.5rem 0 0 !important;
+}
+
+/* Input styling for custom inputs */
+.swal2-input {
+  background-color: #4B5563 !important;
+  border: 1px solid #6B7280 !important;
+  color: #ffffff !important;
+  border-radius: 0.375rem !important;
+}
+
+.swal2-input:focus {
+  border-color: #EC4899 !important;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+  outline: none !important;
+}
+
+.swal2-textarea {
+  background-color: #4B5563 !important;
+  border: 1px solid #6B7280 !important;
+  color: #ffffff !important;
+  border-radius: 0.375rem !important;
+}
+
+.swal2-textarea:focus {
+  border-color: #EC4899 !important;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+  outline: none !important;
+}
+
+/* Select styling */
+.swal2-select {
+  background-color: #4B5563 !important;
+  border: 1px solid #6B7280 !important;
+  color: #ffffff !important;
+  border-radius: 0.375rem !important;
+}
+
+.swal2-select:focus {
+  border-color: #EC4899 !important;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+  outline: none !important;
+}
+
+/* Checkbox and radio styling */
+.swal2-checkbox input,
+.swal2-radio input {
+  accent-color: #EC4899 !important;
+}
+
+.swal2-checkbox label,
+.swal2-radio label {
+  color: #ffffff !important;
+}
+
+/* File input styling */
+.swal2-file {
+  background-color: #4B5563 !important;
+  border: 1px solid #6B7280 !important;
+  color: #ffffff !important;
+  border-radius: 0.375rem !important;
+}
+
+/* Validation message styling */
+.swal2-validation-message {
+  background-color: #DC2626 !important;
+  color: #ffffff !important;
+  border-radius: 0.375rem !important;
+}
+
+/* Close button styling */
+.swal2-close {
+  color: #9CA3AF !important;
+  font-size: 1.5rem !important;
+}
+
+.swal2-close:hover {
+  color: #ffffff !important;
+}
+
+/* Backdrop styling */
+.swal2-backdrop-show {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Animation improvements */
+.swal2-show {
+  animation: swal2-show 0.3s ease-out !important;
+}
+
+.swal2-hide {
+  animation: swal2-hide 0.15s ease-in !important;
+}
+
+@keyframes swal2-show {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+
+  45% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  80% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes swal2-hide {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .swal-dark-popup {
+    margin: 1rem !important;
+    max-width: calc(100% - 2rem) !important;
+  }
+
+  .swal-dark-title {
+    font-size: 1.125rem !important;
+  }
+
+  .swal-dark-content {
+    font-size: 0.8125rem !important;
+  }
+
+  .swal-dark-confirm,
+  .swal-dark-cancel {
+    padding: 0.375rem 0.75rem !important;
+    font-size: 0.875rem !important;
+  }
+}

@@ -1,0 +1,839 @@
+{
+  "loginForm": {
+    "login": "Se connecter",
+    "loginIn": "Connexion en cours...",
+    "email": "Adresse e-mail",
+    "emailPlaceholder": "email@email.com",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "submit": "Soumettre"
+  },
+  "leftPanel": {
+    "dashboardTitle": "Tableau de bord administrateur",
+    "dashboard": "Tableau de bord",
+    "manageUsers": "Gérer les utilisateurs",
+    "candidates": "Candidats",
+    "enterprises": "Entreprises",
+    "manageJobs": "Gérer les offres d'emploi",
+    "manageAlerts": "Gérer les alertes",
+    "userReports": "Rapports utilisateurs",
+    "manageAdmins": "Gérer les administrateurs",
+    "settings": "Paramètres",
+    "language": "Langue",
+    "firebaseAnalytics": "Firebase Analytics",
+    "crashAnalytics": "Crash Analytics",
+    "logout": "Déconnexion"
+  },
+  "status": {
+    "active": "Actif",
+    "suspended": "Suspendu",
+    "inactive": "Suspended",
+    "flagged": "Signalé",
+    "hidden": "Masqué",
+    "pending": "En attente",
+    "draft": "Brouillon",
+    "subscribed": "Abonné",
+    "expired": "Expiré",
+    "trial": "Essai"
+  },
+  "breadcrumbs": {
+    "dashboard": "Tableau de bord",
+    "manageUsers": "Gérer les utilisateurs",
+
+    "candidates": "Candidats",
+    "addNewCandidate": "Ajouter un nouveau candidat",
+    "editCandidate": "Modifier le candidat",
+    "viewCandidate": "Voir le candidat",
+
+    "enterprises": "Entreprises",
+    "addNewEnterprise": "Ajouter une nouvelle entreprise",
+    "editEnterprise": "Modifier l'entreprise",
+    "viewEnterprise": "Voir l'entreprise",
+
+    "manageAdmins": "Gérer les administrateurs",
+    "addNewAdmin": "Ajouter un nouvel administrateur",
+    "editAdmin": "Modifier l'Administrateur",
+    "viewAdmine": "Voir l'Administrateur",
+
+    "jobs": "Offres d'emploi",
+    "manageJobs": "Gérer les offres d'emploi",
+    "editJob": "Modifier l'offre d'emploi",
+    "viewJob": "Voir l'offre d'emploi",
+    "addNewJob": "Ajouter une nouvelle offre d'emploi",
+
+    "manageAlerts": "Gérer les alertes",
+    "createAlert": "Créer une nouvelle alerte",
+    "editAlert": "Modifier l'alerte",
+
+    "about": "À propos",
+    "settings": "Paramètres"
+  },
+  "options": {
+    "rightNow": "Tout de suite",
+    "oneToTwoWeeks": "1-2 semaines",
+    "oneMonth": "1 mois",
+    "later": "Plus tard",
+
+    "permanentContract": "CDI",
+    "fixedTermContract": "CDD",
+    "apprenticeship": "Apprentissage",
+    "temporary": "Intérim",
+    "internship": "Stage",
+    "seasonal": "Saisonnier",
+
+    "monday": "L",
+    "tuesday": "M",
+    "wednesday": "M",
+    "thursday": "J",
+    "friday": "V",
+    "saturday": "S",
+    "sunday": "D",
+
+    "fullTime": "Temps plein",
+    "partTime": "Temps partiel",
+
+    "morning": "Matin",
+    "afternoon": "Après-midi",
+    "evening": "Soir",
+    "night": "Nuit",
+    "officeHours": "Horaires de bureau",
+
+    "personalServices": "Services à la personne",
+    "beautyHairdressing": "Beauté/Coiffure",
+    "nailCare": "Soins des ongles",
+    "cleaning": "Nettoyage",
+    "catering": "Restauration",
+    "hospitality": "Hôtellerie",
+    "retail": "Commerce de détail",
+    "animation": "Animation",
+    "agricultural": "Agriculture",
+    "butchery": "Boucherie",
+    "administrative": "Administratif",
+    "massRetail": "Grande distribution",
+    "secretarial": "Secrétariat",
+    "logistics": "Logistique",
+    "foodProcessing": "Agroalimentaire",
+    "realEstate": "Immobilier",
+    "informationTechnology": "Informatique",
+    "telecommunications": "Télécommunications",
+    "earlyChildhood": "Petite enfance",
+    "bakery": "Boulangerie",
+    "medical": "Médical",
+    "ambulance": "Services ambulanciers",
+    "retirementHome": "Maison de retraite",
+    "babySitting": "Garde d'enfants",
+    "accounting": "Comptabilité",
+    "marketing": "Marketing",
+    "btp": "BTP",
+    "pastry": "Pâtisserie",
+    "pharmaceutical": "Pharmaceutique",
+    "fishmonger": "Poissonnier",
+    "industrial": "Industriel",
+    "delivery": "Livraison",
+
+    "patientReception": "Accueil patients",
+    "goodsReception": "Réception marchandises",
+    "tableService": "Service à table",
+    "cooking": "Cuisine",
+    "canteen": "Cantine",
+    "readyToWear": "Prêt-à-porter",
+    "decoration": "Décoration",
+    "makeup": "Maquillage",
+    "fashion": "Mode",
+    "heavyGoods": "Poids lourds",
+    "handling": "Manutention",
+    "shelfStocking": "Mise en rayon",
+    "electricity": "Électricité",
+    "masonry": "Maçonnerie",
+    "bartender": "Barman",
+    "teamLeader": "Chef d'équipe",
+    "computerSkills": "Compétences informatiques",
+    "dishwasher": "Plongeur",
+    "hygiene": "Hygiène",
+    "forkliftCertification": "CACES",
+    "construction": "Construction",
+    "diy": "Bricolage",
+    "gardening": "Jardinage",
+    "msOffice": "MS Office",
+    "inventoryManagement": "Gestion de stock",
+    "warehouseWorker": "Magasinier",
+    "orderPicker": "Préparateur de commandes",
+    "maintenance": "Maintenance",
+    "lifeguard": "Maître-nageur",
+    "motorcycle": "Moto",
+    "automotive": "Automobile",
+    "upkeep": "Entretien",
+    "camping": "Camping",
+    "personalAssistance": "Aide à la personne",
+    "repair": "Réparation",
+    "renovation": "Rénovation",
+    "distribution": "Distribution",
+    "socialMediaManagement": "Gestion des réseaux sociaux",
+    "typing": "Dactylographie",
+    "officeTools": "Outils bureautiques",
+    "cashRegister": "Caisse",
+
+    "rigor": "Rigueur",
+    "goodSpeech": "Bonne élocution",
+    "telephoneSkills": "Compétences téléphoniques",
+    "customerReception": "Accueil client",
+    "manual": "Manuel",
+    "transport": "Transport",
+    "fast": "Rapide",
+    "drivingLicense": "Permis de conduire",
+    "computerLiteracy": "Informatique",
+    "creativity": "Créativité",
+    "empathy": "Empathie",
+    "teamwork": "Travail d'équipe",
+    "heavyLifting": "Port de charges",
+    "officeSoftware": "Logiciels de bureau",
+    "salesTechniques": "Techniques de vente",
+    "management": "Management",
+    "foreignLanguages": "Langues étrangères",
+    "autonomy": "Autonomie",
+    "curiosity": "Curiosité",
+    "initiative": "Initiative",
+    "stressManagement": "Gestion du stress",
+    "versatility": "Polyvalence",
+    "mobility": "Mobilité",
+
+    "transportReimbursement": "Remboursement transport",
+    "mealVouchers": "Tickets restaurant",
+    "remoteWork": "Télétravail",
+    "reducedWorkingTime": "RTT",
+    "healthInsurance": "Mutuelle",
+    "giftVouchers": "Chèques cadeaux",
+    "teamBuilding": "Team building",
+    "bonuses": "Primes",
+    "savings": "Épargne",
+    "companyVehicle": "Véhicule de fonction",
+    "gym": "Salle de sport"
+  },
+  "Roles": {
+    "superAdmin": "Super Administrateur",
+    "admin": "Administrateur",
+    "customerSupport": "Service Client"
+  },
+  "Dashboard": {
+    "graphs": {
+      "totalUsers": "Nombre total d'utilisateurs",
+      "activeSubscriptions": "Abonnements actifs",
+      "totalPublished": "Nombre total d'offres publiées",
+      "graphText": "vs mois dernier"
+    },
+    "jobsTable": {
+      "title": "Offres d'emploi récentes",
+      "viewAll": "Voir toutes les offres",
+      "job": "Emploi",
+      "by": "",
+      "location": "Lieu",
+      "date": "Date de publication",
+      "actions": "Actions",
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    },
+    "enterprisesTable": {
+      "title": "Entreprises récemment inscrites",
+      "viewAll": "Voir tout",
+      "job": "Entreprise",
+      "viwProfile": "Voir le profil"
+    }
+  },
+  "common": {
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "saveChanges": "Enregistrer les modifications",
+    "add": "Ajouter",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "loading": "Chargement...",
+    "success": "Succès !",
+    "error": "Erreur",
+    "warning": "Avertissement",
+    "required": "Obligatoire",
+    "optional": "Optionnel",
+    "search": "Rechercher",
+    "select": "Sélectionner",
+    "remove": "Supprimer",
+    "upload": "Télécharger",
+    "continue": "Continuer",
+    "yes": "Oui",
+    "no": "Non",
+    "ok": "OK",
+    "saveAsDraft": "Enregistrer comme brouillon",
+    "noOptionsFound": "Aucune option trouvée",
+    "loadingJobs": "Chargement des offres...",
+    "loadingEnterprises": "Chargement des entreprises...",
+    "noJobsFound": "Aucun emploi trouvé",
+    "noResultsFound": "Aucun résultat trouvé",
+    "noEnterprisesFound": "Aucune entreprise trouvée"
+  },
+  "navigation": {
+    "manageUsers": "Gérer les utilisateurs",
+    "enterprises": "Entreprises",
+    "candidates": "Candidats",
+    "manageJobs": "Gérer les offres d'emploi",
+    "jobs": "Offres d'emploi"
+  },
+  "enterprise": {
+    "title": "Entreprise",
+    "addEnterprise": "Ajouter une entreprise",
+    "editEnterprise": "Modifier l'entreprise",
+    "updateEnterprise": "Mettre à jour l'entreprise",
+    "companyInformation": "Informations sur l'entreprise",
+    "businessDetails": "Détails de l'entreprise",
+    "accountSubscription": "Compte et abonnement",
+    "notificationSettings": "Paramètres de notification",
+    "companyName": "Nom de l'entreprise",
+    "emailAddress": "Adresse e-mail",
+    "phoneNumber": "Numéro de téléphone",
+    "companyLogo": "Logo de l'entreprise",
+    "businessSectors": "Secteurs d'activité",
+    "streetAddress": "Adresse",
+    "city": "Ville",
+    "postalCode": "Code postal",
+    "businessLocation": "Emplacement de l'entreprise",
+    "initialPassword": "Mot de passe initial",
+    "initialSubscription": "Abonnement initial",
+    "pushNotifications": "Notifications push",
+    "emailNotifications": "Notifications par e-mail",
+    "placeholders": {
+      "companyName": "Entrez le nom de l'entreprise",
+      "emailAddress": "Entrez l'adresse e-mail",
+      "phoneNumber": "Entrez le numéro de téléphone",
+      "streetAddress": "Entrez l'adresse",
+      "city": "Entrez la ville",
+      "postalCode": "Entrez le code postal",
+      "businessLocation": "Entrez un emplacement",
+      "businessSectors": "Ajoutez un secteur (ex: Hôtellerie) et appuyez sur Entrée",
+      "searchSectors": "Rechercher des secteurs...",
+      "selectSubscription": "Sélectionnez un forfait initial pour cette entreprise"
+    },
+    "descriptions": {
+      "logoUpload": "Cliquez pour télécharger ou glissez-déposez",
+      "logoFormats": "SVG, PNG ou JPG (max. 800x800px)",
+      "mapPlaceholder": "La carte apparaîtra ici",
+      "initialPassword": "Un mot de passe temporaire sera généré automatiquement et envoyé à l'adresse e-mail de l'entreprise. Il sera demandé de le modifier lors de la première connexion.",
+      "subscriptionOptions": "Options : Essai gratuit, Essentiel, Professionnel, Business",
+      "pushNotifications": "Permet à l'application d'envoyer à cette entreprise des alertes instantanées pour les nouveaux matchs et messages.",
+      "emailNotifications": "Permet à l'application d'envoyer à cette entreprise des résumés par e-mail, des informations de facturation et des mises à jour du compte.",
+      "resetPassword": "Cela enverra un e-mail à l'entreprise avec des instructions pour réinitialiser son mot de passe.",
+      "suspendAccount": "Cela désactivera temporairement le compte. L'entreprise ne pourra pas se connecter et son profil sera masqué aux candidats. Cette action peut être annulée à tout moment.",
+      "deleteAccount": "Cela supprimera définitivement le compte de l'entreprise et toutes les données associées, y compris son profil, ses messages et ses offres d'emploi. Cette action ne peut pas être annulée."
+    },
+    "subscriptionPlans": {
+      "freeTrial": "Essai gratuit",
+      "essential": "Essentiel",
+      "professional": "Professionnel",
+      "business": "Business"
+    },
+    "sections": {
+      "section1": "Section 1 : Informations sur l'entreprise",
+      "section2": "Section 2 : Détails de l'entreprise",
+      "section3": "Section 3 : Compte et abonnement",
+      "section4": "Section 4 : Paramètres de notification"
+    },
+    "notifications": {
+      "enablePush": "Activer les notifications push",
+      "enableEmail": "Activer les notifications par e-mail"
+    },
+    "accountSettings": "Paramètres du compte",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "suspendAccount": "Suspendre le compte",
+    "deleteAccount": "Supprimer le compte",
+
+    "actions": {
+      "sendPasswordReset": "Envoyer un e-mail de réinitialisation",
+      "suspendAccount": "Suspendre le compte",
+      "reactivateAccount": "Réactiver le compte",
+      "deleteAccount": "Supprimer le compte"
+    }
+  },
+  "candidate": {
+    "title": "Candidat",
+    "addCandidate": "Ajouter un candidat",
+    "editCandidate": "Modifier le candidat",
+    "updateCandidate": "Mettre à jour le candidat",
+    "basicInformation": "Informations de base",
+    "professionalProfile": "Profil professionnel",
+    "jobPreferences": "Préférences d'emploi",
+    "accountSettings": "Paramètres du compte",
+    "candidateName": "Nom du candidat",
+    "candidateFirstName": "Prénom du candidat",
+    "candidateLastName": "Nom du candidat",
+    "emailAddress": "Adresse e-mail",
+    "phoneNumber": "Numéro de téléphone",
+    "dateOfBirth": "Date de naissance",
+    "cityOfResidence": "Ville de résidence",
+    "profilePicture": "Photo de profil",
+    "interests": "Centres d'intérêt",
+    "skills": "Compétences",
+    "qualities": "Qualités",
+    "additionalInfo": "Informations supplémentaires",
+    "contractTypes": "Types de contrat",
+    "workingTime": "Temps de travail",
+    "availability": "Disponibilité",
+    "preferredLocation": "Lieu préféré",
+    "initialPassword": "Mot de passe initial",
+    "emailNotifications": "Notifications par e-mail",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "suspendAccount": "Suspendre le compte",
+    "deleteAccount": "Supprimer le compte",
+    "placeholders": {
+      "candidateName": "Entrez le nom du candidat",
+      "candidateFirstName": "Entrez le prénom du candidat",
+      "candidateLastName": "Entrez le nom du candidat",
+      "emailAddress": "Entrez l'adresse e-mail",
+      "phoneNumber": "Entrez le numéro de téléphone",
+      "cityOfResidence": "Entrez la ville de résidence",
+      "interests": "Sélectionnez les centres d'intérêt",
+      "skills": "Sélectionnez les compétences",
+      "qualities": "Sélectionnez les qualités",
+      "additionalInfo": "Entrez des informations supplémentaires",
+      "preferredLocation": "Entrez le lieu",
+      "searchInterests": "Rechercher des centres d'intérêt...",
+      "searchSkills": "Rechercher des compétences...",
+      "searchQualities": "Rechercher des qualités..."
+    },
+    "descriptions": {
+      "profileUpload": "Cliquez pour télécharger ou glissez-déposez",
+      "profileFormats": "SVG, PNG, JPG ou GIF (max. 800x800px)",
+      "removePicture": "Supprimer la photo",
+      "initialPassword": "Un mot de passe temporaire sera généré automatiquement et envoyé à l'adresse e-mail du candidat. Il sera demandé de le modifier lors de la première connexion.",
+      "emailNotifications": "Permet à l'application d'envoyer au candidat des résumés par e-mail, des mises à jour du compte et des notifications promotionnelles.",
+      "resetPassword": "Cela enverra un e-mail au candidat avec des instructions pour réinitialiser son mot de passe.",
+      "suspendAccount": "Cela désactivera temporairement le compte. L'utilisateur ne pourra pas se connecter et son profil sera masqué aux entreprises. Cette action peut être annulée à tout moment.",
+      "deleteAccount": "Cela supprimera définitivement le compte de l'utilisateur et toutes les données associées, y compris son profil, ses messages et son historique de candidatures. Cette action ne peut pas être annulée.",
+      "charactersLeft": "caractères restants"
+    },
+    "contractTypes": {
+      "permanent": "CDI",
+      "contract": "CDD",
+      "temporary": "Intérim",
+      "partTime": "Temps partiel",
+      "freelance": "Freelance"
+    },
+    "workingTime": {
+      "fullTime": "Temps plein",
+      "partTime": "Temps partiel",
+      "flexible": "Flexible",
+      "remote": "Télétravail"
+    },
+    "availability": {
+      "rightNow": "Tout de suite",
+      "within1Week": "Sous 1 semaine",
+      "within1Month": "Sous 1 mois",
+      "within3Months": "Sous 3 mois"
+    },
+    "sections": {
+      "section1": "Section 1 : Informations de base",
+      "section2": "Section 2 : Profil professionnel",
+      "section3": "Section 3 : Préférences d'emploi",
+      "section4": "Section 4 : Paramètres du compte"
+    },
+    "actions": {
+      "sendPasswordReset": "Envoyer un e-mail de réinitialisation",
+      "suspendAccount": "Suspendre le compte",
+      "reactivateAccount": "Réactiver le compte",
+      "deleteAccount": "Supprimer le compte",
+      "addEnterprise": "Ajouter une entreprise"
+    },
+    "noOptionsFound": {
+      "interests": "Aucun centre d'intérêt trouvé",
+      "skills": "Aucune compétence trouvée",
+      "qualities": "Aucune qualité trouvée"
+    }
+  },
+  "job": {
+    "title": "Offre d'emploi",
+    "manageJobs": "Gérer les offres d'emploi",
+    "addNewJob": "Ajouter une nouvelle offre d'emploi",
+    "editJob": "Modifier l'offre d'emploi",
+    "updateJobOffer": "Mettre à jour l'offre d'emploi",
+    "publishJobOffer": "Publier l'offre d'emploi",
+    "hiringEnterprise": "Entreprise qui recrute",
+    "jobTitle": "Titre du poste",
+    "essentialSkills": "Compétences essentielles",
+    "desiredQualities": "Qualités souhaitées",
+    "jobDomains": "Domaines d'emploi",
+    "workplaceType": "Type de lieu de travail",
+    "jobLocation": "Lieu de travail",
+    "contractTypes": "Types de contrat",
+    "workingTime": "Temps de travail",
+    "startDate": "Date de début",
+    "hourlySalary": "Salaire horaire",
+    "monthlySalary": "Salaire mensuel",
+    "annualSalary": "Salaire annuel",
+    "benefits": "Avantages",
+    "initialStatus": "Statut initial",
+    "sections": {
+      "coreJobDetails": "Section 1 : Détails principaux du poste",
+      "candidateRequirements": "Section 2 : Exigences du candidat",
+      "locationSchedule": "Section 3 : Lieu et horaires",
+      "compensationStatus": "Section 4 : Rémunération et statut"
+    },
+    "placeholders": {
+      "searchCompany": "Rechercher et sélectionner l'entreprise",
+      "jobTitle": "ex., Designer graphique senior",
+      "addSkill": "Ajouter une compétence (ex., React js) et appuyer sur Entrée",
+      "searchSkills": "Rechercher des compétences...",
+      "addQuality": "Ajouter une qualité (ex., Travail d'équipe) et appuyer sur Entrée",
+      "searchQualities": "Rechercher des qualités...",
+      "addDomain": "Ajouter un domaine (ex., Hôtellerie) et appuyer sur Entrée",
+      "searchDomains": "Rechercher des domaines...",
+      "enterLocation": "Entrer un lieu",
+      "hourlySalary": "ex., 13",
+      "monthlySalary": "ex., 580",
+      "annualSalary": "ex., 10000",
+      "addBenefit": "Ajouter un avantage (ex., Mutuelle) et appuyer sur Entrée",
+      "searchBenefits": "Rechercher des avantages..."
+    },
+    "descriptions": {
+      "mapPlaceholder": "Recherchez un lieu pour afficher la carte"
+    },
+    "workplaceTypes": {
+      "onSite": "Sur site",
+      "hybrid": "Hybride",
+      "fullyRemote": "Entièrement à distance"
+    },
+    "contractTypeOptions": {
+      "permanent": "CDI",
+      "fixedTerm": "CDD",
+      "internship": "Stage"
+    },
+    "workingTimeOptions": {
+      "fullTime": "Temps plein",
+      "partTime": "Temps partiel"
+    },
+    "startDateOptions": {
+      "rightNow": "Tout de suite",
+      "oneToTwoWeeks": "1-2 semaines",
+      "oneMonth": "1 mois"
+    }
+  },
+  "validation": {
+    "required": "{field} est obligatoire",
+    "invalidEmail": "Veuillez entrer une adresse e-mail valide",
+    "invalidPhone": "Veuillez entrer un numéro de téléphone valide",
+    "fileTooLarge": "La taille du fichier doit être inférieure à {size}",
+    "invalidFileType": "Veuillez sélectionner un fichier image valide ({types})"
+  },
+  "alerts": {
+    "success": {
+      "enterpriseAdded": "Entreprise ajoutée avec succès !",
+      "enterpriseUpdated": "Entreprise mise à jour avec succès !",
+      "candidateAdded": "Candidat ajouté avec succès !",
+      "candidateUpdated": "Candidat mis à jour avec succès !",
+      "passwordResetSent": "E-mail de réinitialisation du mot de passe envoyé avec succès !",
+      "accountSuspended": "Compte suspendu avec succès !",
+      "accountReactivated": "Compte réactivé avec succès !",
+      "accountDeleted": "Compte supprimé avec succès !",
+      "jobPublished": "Offre d'emploi publiée avec succès !",
+      "jobUpdated": "Offre d'emploi mise à jour avec succès !",
+      "draftSaved": "Brouillon enregistré avec succès !",
+      "adminAdded": "Administrateur ajouté avec succès !",
+      "adminUpdated": "Administrateur mis à jour avec succès !"
+    },
+    "error": {
+      "loadingData": "Échec du chargement des données de {type}. Veuillez réessayer.",
+      "savingData": "Erreur lors de l'enregistrement de {type}. Veuillez réessayer.",
+      "updatingData": "Erreur lors de la mise à jour de {type}. Veuillez réessayer.",
+      "sendingPasswordReset": "Erreur lors de l'envoi de l'e-mail de réinitialisation du mot de passe.",
+      "suspendingAccount": "Erreur lors de la suspension du compte.",
+      "deletingAccount": "Erreur lors de la suppression du compte.",
+      "savingDraft": "Erreur lors de l'enregistrement du brouillon"
+    },
+    "confirm": {
+      "cancelChanges": "Êtes-vous sûr de vouloir annuler ? Toutes les modifications non enregistrées seront perdues.",
+      "suspendAccount": "Êtes-vous sûr de vouloir suspendre ce compte ?",
+      "reactivateAccount": "Êtes-vous sûr de vouloir réactiver ce compte ?",
+      "deleteAccount": "Êtes-vous sûr de vouloir supprimer ce compte ? Cette action ne peut pas être annulée.",
+      "deleteAccountFinal": "Cela supprimera définitivement toutes les données de l'utilisateur. Êtes-vous absolument sûr ?"
+    },
+    "loading": {
+      "addingEnterprise": "Ajout de l'entreprise...",
+      "updatingEnterprise": "Mise à jour de l'entreprise...",
+      "addingCandidate": "Ajout du candidat...",
+      "updatingCandidate": "Mise à jour du candidat...",
+      "publishingJob": "Publication de l'offre d'emploi...",
+      "updatingJob": "Mise à jour de l'offre d'emploi...",
+      "savingDraft": "Enregistrement du brouillon...",
+      "pleaseWait": "Veuillez patienter pendant que nous traitons votre demande.",
+      "sendingEmail": "Envoi de l'e-mail...",
+      "deletingData": "Suppression en cours..."
+    },
+    "titles": {
+      "validationError": "Erreur de validation",
+      "fileTooLarge": "Fichier trop volumineux",
+      "invalidFileType": "Type de fichier invalide",
+      "loadingError": "Erreur de chargement",
+      "cancelChanges": "Annuler les modifications ?",
+      "suspendAccount": "Suspendre le compte",
+      "reactivateAccount": "Réactiver le compte",
+      "deleteAccount": "Supprimer le compte",
+      "finalConfirmation": "Confirmation finale",
+      "passwordResetSent": "Réinitialisation du mot de passe envoyée"
+    },
+    "buttons": {
+      "continueEditing": "Continuer à modifier",
+      "yesSuspend": "Oui, suspendre",
+      "yesReactivate": "Oui, réactiver",
+      "yesDelete": "Oui, supprimer",
+      "deletePermanently": "Supprimer définitivement",
+      "yesCancel": "Oui, annuler"
+    }
+  },
+  "subscription": {
+    "subscribed": "Abonné",
+    "expired": "Expiré",
+    "trial": "Essai"
+  },
+  "enterprisesTable": {
+    "tableHeader": "Toutes les entreprises",
+    "enterprise": "Entreprise",
+    "location": "Lieu",
+    "businessSector": "Secteur d'activité",
+    "activeJobs": "Emplois actifs",
+    "subscription": "Abonnement",
+    "actions": "Actions"
+  },
+  "pagination": {
+    "showing": "Affichage {start} sur {total}",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "forgotPassword": {
+    "title": "Mot de passe oublié 🔒",
+    "body": "Saisissez l'adresse e-mail utilisée lors de votre inscription pour réinitialiser votre mot de passe.",
+    "mainLabel": "Adresse e-mail",
+    "buttonText": "Recevoir l'e-mail de réinitialisation"
+  },
+  "resendEmail": {
+    "title": "Demande envoyée 💌",
+    "body": "Si votre adresse e-mail est enregistrée dans notre système, vous recevrez un e-mail contenant un lien pour réinitialiser votre mot de passe.",
+    "notReceive": "Vous n'avez pas reçu l'e-mail ? ",
+    "linkText": "Renvoyer un e-mail"
+  },
+  "createNewPassword": {
+    "title": "Nouveau mot de passe",
+    "body": "Saisissez votre nouveau mot de passe.",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmez le mot de passe",
+    "placeHolder": "Entrez votre mot de passe",
+    "buttonText": "Réinitialiser le mot de passe"
+  },
+  "resetSuccess": {
+    "title": "Réinitialisation réussie 🎉",
+    "body": "Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter à votre compte avec votre nouveau mot de passe.",
+    "buttonText": "Se connecter"
+  },
+  "admin": {
+    "title": "Administrateur",
+    "addAdmin": "Ajouter un Nouvel Administrateur",
+    "editAdmin": "Modifier l'Administrateur",
+    "updateAdmin": "Mettre à Jour l'Administrateur",
+    "fullName": "Nom Complet",
+    "emailAddress": "Adresse E-mail",
+    "phoneNumber": "Numéro de Téléphone",
+    "role": "Rôle",
+    "profilePhoto": "Photo de Profil",
+    "initialPassword": "Mot de Passe Initial",
+    "accountSettings": "Paramètres du compte",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "suspendAccount": "Suspendre le compte",
+    "deleteAccount": "Supprimer le compte",
+    "sections": {
+      "section1": "Section 1 : Informations Utilisateur",
+      "section2": "Section 2 : Sécurité"
+    },
+    "placeholders": {
+      "fullName": "Entrez le nom complet du membre de l'équipe",
+      "emailAddress": "Entrez l'adresse e-mail",
+      "phoneNumber": "Entrez le numéro de téléphone",
+      "selectRole": "Sélectionnez un rôle pour cet utilisateur"
+    },
+    "descriptions": {
+      "roleDescription": "Ceci détermine le niveau d'accès et les permissions de l'utilisateur dans le tableau de bord.",
+      "profileUpload": "Cliquez pour télécharger ou glissez-déposez",
+      "profileFormats": "SVG, PNG, ou JPG (max. 800x800px)",
+      "initialPassword": "Un mot de passe temporaire sera généré automatiquement et envoyé à l'adresse e-mail de l'administrateur. Il sera demandé de le changer lors de sa première connexion.",
+      "emailNotifications": "Permet à l'application d'envoyer à l'administrateur des résumés par e-mail, des mises à jour de compte et des notifications promotionnelles.",
+      "resetPassword": "Cela enverra un e-mail à l'administrateur avec des instructions pour réinitialiser son mot de passe.",
+      "suspendAccount": "Cela désactivera temporairement le compte. L'utilisateur ne pourra pas se connecter et son profil sera masqué aux entreprises. Cette action peut être annulée à tout moment.",
+      "deleteAccount": "Cela supprimera définitivement le compte de l'utilisateur et toutes les données associées, y compris son profil, ses messages et son historique de candidatures. Cette action ne peut pas être annulée.",
+      "charactersLeft": "caractères restants"
+    },
+    "roles": {
+      "moderator": "Modérateur"
+    },
+    "actions": {
+      "createAccount": "Créer un Compte Administrateur",
+      "sendPasswordReset": "Envoyer un E-mail de Réinitialisation",
+      "suspendAccount": "Suspendre le Compte",
+      "reactivateAccount": "Réactiver le Compte",
+      "deleteAccount": "Supprimer le Compte"
+    },
+    "confirm": {
+      "cancelChanges": "Êtes-vous sûr de vouloir annuler ? Toutes les modifications non enregistrées seront perdues.",
+      "suspendAccount": "Êtes-vous sûr de vouloir suspendre ce compte ?",
+      "reactivateAccount": "Êtes-vous sûr de vouloir réactiver ce compte ?",
+      "deleteAccount": "Êtes-vous sûr de vouloir supprimer ce compte ? Cette action ne peut pas être annulée.",
+      "deleteAccountFinal": "Cela supprimera définitivement toutes les données de l'utilisateur. Êtes-vous absolument sûr ?"
+    },
+    "subscription": {
+      "subscribed": "Abonné",
+      "expired": "Expiré",
+      "trial": "Essai"
+    },
+    "enterprisesTable": {
+      "tableHeader": "Toutes les entreprises",
+      "enterprise": "Entreprise",
+      "location": "Lieu",
+      "businessSector": "Secteur d'activité",
+      "activeJobs": "Emplois actifs",
+      "subscription": "Abonnement",
+      "actions": "Actions"
+    },
+    "pagination": {
+      "showing": "Affichage {start} sur {total}",
+      "previous": "Précédent",
+      "next": "Suivant"
+    }
+  },
+  "adminTable": {
+    "tableHeader": "Tous les administrateurs",
+    "role": "Rôle",
+    "dateAdded": "Date d'ajout",
+    "lastActive": "Dernière activité",
+    "phoneNumber": "Numéro de téléphone",
+    "status": "Statut",
+    "actions": "Actions"
+  },
+  "multiselector": {
+    "placeholder": "Sélectionner des options...",
+    "searchPlaceholder": "Rechercher...",
+    "noOptionsText": "Aucune option disponible",
+    "add": "Ajouter",
+    "selected": "{count} élément | {count} éléments"
+  },
+  "location": {
+    "radius": "Zone de service",
+    "drag": "Faites glisser le curseur pour ajuster le rayon"
+  },
+  "alertsTable": {
+    "tableHeader": "Historique des alertes envoyées",
+    "alert": "Alerte",
+    "audience": "Public",
+    "dateSent": "Date d'envoi",
+    "channels": "Canaux",
+    "status": "Statut",
+    "actions": "Actions",
+    "email": "✉️ E-mail",
+    "pushNotifications": "🔔 Notifications push"
+  },
+  "alertStatus": {
+    "sent": "Envoyé",
+    "draft": "Brouillon"
+  },
+  "settings": {
+    "editProfile": "Modifier Votre Profil",
+    "updateDetails": "Mettez à jour votre photo et vos informations personnelles ici.",
+    "fullName": "Nom Complet",
+    "enterFullName": "Entrez votre nom complet",
+    "profilePicture": "Photo de Profil",
+    "clickToUpload": "Cliquez pour télécharger ou glissez-déposez",
+    "imageFormats": "SVG, PNG, JPG ou GIF (max. 800x800px)",
+    "changePassword": "Changer le Mot de Passe",
+    "updatePassword": "Vous pouvez mettre à jour votre mot de passe ici.",
+    "currentPassword": "Mot de Passe Actuel",
+    "enterCurrentPassword": "Entrez votre mot de passe actuel",
+    "newPassword": "Nouveau Mot de Passe",
+    "enterNewPassword": "Entrez un nouveau mot de passe",
+    "confirmNewPassword": "Confirmer le Nouveau Mot de Passe",
+    "confirmPassword": "Confirmer le Nouveau Mot de Passe",
+    "language": "Langue",
+    "selectLanguage": "Sélectionnez votre langue préférée",
+    "profileUpdated": "Profil mis à jour avec succès !",
+    "errorUpdatingProfile": "Échec de la mise à jour du profil. Veuillez réessayer.",
+    "passwordUpdated": "Mot de passe mis à jour avec succès !",
+    "errorUpdatingPassword": "Échec de la mise à jour du mot de passe. Veuillez réessayer.",
+    "passwordTooShort": "Le nouveau mot de passe doit comporter au moins 8 caractères.",
+    "passwordMismatch": "Le nouveau mot de passe et la confirmation ne correspondent pas.",
+    "updatingProfile": "Mise à jour du profil",
+    "updatingPassword": "Mise à jour du mot de passe"
+  },
+  "setNewPassword": {
+    "title": "Créer un nouveau mot de passe",
+    "body": "Bienvenue sur le tableau de bord Find Admin. Par mesure de sécurité lors de votre première connexion, veuillez remplacer le mot de passe temporaire par un nouveau que vous seul connaissez.",
+    "buttonText": "Définir un nouveau mot de passe"
+  },
+  "filters": {
+    "title": "Trier & Filtrer",
+    "enterpriseTitle": "Trier & Filtrer les Entreprises",
+    "sortBy": "Trier par",
+    "filterByStatus": "Filtrer par statut",
+    "filterBySubscription": "Filtrer par abonnement",
+    "filterByBusinessSector": "Filtrer par secteur d'activité",
+    "filterByDateJoined": "Filtrer par date d'inscription",
+    "reset": "Réinitialiser",
+    "applyFilters": "Appliquer les filtres",
+    "dateFormat": "MM.JJ.AAAA",
+    "calendar": {
+      "months": [
+        "Janvier",
+        "Février",
+        "Mars",
+        "Avril",
+        "Mai",
+        "Juin",
+        "Juillet",
+        "Août",
+        "Septembre",
+        "Octobre",
+        "Novembre",
+        "Décembre"
+      ],
+      "weekdays": {
+        "short": ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"]
+      }
+    },
+    "sort": {
+      "newestFirst": "Date d'inscription (Plus récent d'abord)",
+      "oldestFirst": "Date d'inscription (Plus ancien d'abord)",
+      "nameAZ": "Nom (A-Z)",
+      "brandNameAZ": "Nom de marque (A-Z)",
+      "mostActiveJobs": "Plus d'offres actives"
+    },
+    "status": {
+      "all": "Tous les candidats",
+      "active": "Actif",
+      "suspended": "Suspendu",
+      "flagged": "Signalé",
+      "hidden": "Caché"
+    },
+    "subscription": {
+      "all": "Tous les abonnements",
+      "subscribed": "Abonné",
+      "expired": "Expiré",
+      "trial": "Essai"
+    }
+  },
+  "jobs": {
+    "filters": {
+      "allJobs": "Tous les emplois",
+      "filterByDatePosted": "Filtrer par date de publication",
+      "filterByContractType": "Filtrer par type de contrat",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "fullTime": "Temps plein",
+      "partTime": "Temps partiel",
+      "temporary": "Temporaire",
+      "permanent": "Permanent",
+      "internship": "Stage",
+      "titleAZ": "Titre du poste (A-Z)"
+    }
+  }
+}
