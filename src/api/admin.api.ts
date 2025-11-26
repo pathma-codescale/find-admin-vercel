@@ -74,5 +74,6 @@ export const resetAdminPasswordEmailSendApi = async (email: string) => {
     method: 'post',
     url: resetAdminPasswordEmailSendUrl,
     body: { email },
+    publicApi: false,
   })
 }

@@ -96,5 +96,6 @@ export const resetEnterprisesPasswordEmailSendApi = async (email: string) => {
     method: 'post',
     url: resetEnterprisesPasswordEmailSendUrl,
     body: { email },
+    publicApi: false,
   })
 }

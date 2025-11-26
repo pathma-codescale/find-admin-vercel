@@ -1,6 +1,15 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import AppLogo from '../components/AppLogo.vue'
 import LoginForm from '../components/LoginForm.vue'
+import { useRoute } from 'vue-router'
+import SweetAlert from '@/utils/sweetAlert'
+const route = useRoute()
+onMounted(() => {
+  if (route.query.sessionExpired === 'true') {
+    SweetAlert.warning('Session Expired', 'Your session has expired. Please log in again.')
+  }
+})
 </script>
 
 <template>

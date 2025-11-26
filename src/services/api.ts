@@ -1,13 +1,86 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { store } from '@/store'
 import Axios, { type AxiosRequestConfig, type AxiosRequestHeaders, type Method } from 'axios'
+import { useAuthStore } from '@/store/auth/useAuthStore'
+import router from '@/router'
+import { SweetAlert } from '@/utils/sweetAlert'
 
-// import { getAppCheckToken } from 'firebaseConfig/appCheck'
-
-Axios.interceptors.response.use(undefined, (error) => {
-  console.log('INTERCEPTOR ERROR:', error)
-  return Promise.reject(error)
+const api = Axios.create({
+  baseURL: import.meta.env.VITE_API_URL || '',
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
 })
+
+let isShowingLogoutAlert = false
+
+const handleLogout = async (message = 'Your session has expired. Please log in again.') => {
+  if (isShowingLogoutAlert) return
+
+  isShowingLogoutAlert = true
+
+  try {
+    await SweetAlert.warning('Session Expired', message)
+
+    const authStore = useAuthStore()
+    authStore.logout()
+
+    if (router.currentRoute.value.name !== 'login') {
+      router.push({
+        name: 'login',
+        query: {
+          redirect: router.currentRoute.value.fullPath,
+          sessionExpired: 'true',
+        },
+      })
+    }
+  } finally {
+    isShowingLogoutAlert = false
+  }
+}
+
+api.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('accessToken')
+
+    const isAuthRoute = config.url?.includes('/login') || config.url?.includes('/register')
+
+    if (!accessToken && !isAuthRoute) {
+      handleLogout('Authentication required. Please log in.')
+    }
+
+    if (accessToken && config.headers) {
+      config.headers.Authorization = `Bearer ${accessToken}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  },
+)
+
+api.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  async (error) => {
+    const originalRequest = error.config
+
+    if (error.response) {
+      if (error.response.status === 401 && !originalRequest._retry) {
+        const errorMessage =
+          error.response.data?.message || 'Your session has expired. Please log in again.'
+        handleLogout(errorMessage)
+      }
+
+      if (error.response.status === 403) {
+        SweetAlert.error('Access Denied', 'You do not have permission to perform this action.')
+      }
+    }
+
+    return Promise.reject(error)
+  },
+)
 
 const request = ({
   url,
@@ -15,7 +88,7 @@ const request = ({
   method,
   body,
   headers: addHeaders,
-  // publicApi,
+  publicApi,
   validUser,
   file,
 }: {
@@ -29,33 +102,22 @@ const request = ({
   file?: boolean
 }): Promise<any> =>
   new Promise(async (resolve, reject) => {
-    // const appCheckToken = import.meta.env.REACT_APP_ENV !== 'DEV' && (await getAppCheckToken())
+    const headers: any = {
+      'Content-Type': file ? 'multipart/form-data' : 'application/json',
+      ...addHeaders,
+    }
 
-    const headers: any =
-      import.meta.env.REACT_APP_ENV !== 'DEV'
-        ? {
-            'Content-Type': file ? 'multipart/form-data' : 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            // 'X-Firebase-AppCheck': appCheckToken ?? '',
-            ...addHeaders,
-          }
-        : {
-            'Content-Type': file ? 'multipart/form-data' : 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            ...addHeaders,
-          }
-
-    // if (!publicApi) {
-    //   const token = store.getState().auth?.userToken
-    //   if (!token) {
-    //     console.error('FAILED: Cannot retrieve token')
-    //     reject({ response: { error: 'Cannot retrieve token' } })
-    //   }
-    //   headers.Authorization = `Bearer ${token}`
-    //   // if (import.meta.env.REACT_APP_ENV !== 'DEV') headers['X-Firebase-AppCheck'] = appCheckToken ?? ''
-    // }
-
-    if (validUser) headers.Authorization = `Bearer ${validUser}`
+    if (validUser) {
+      headers.Authorization = `Bearer ${validUser}`
+    } else if (!publicApi) {
+      const accessToken = localStorage.getItem('accessToken')
+      if (!accessToken) {
+        console.error('FAILED: Cannot retrieve token')
+        handleLogout('Authentication required. Please log in.')
+        reject({ response: { error: 'Cannot retrieve token' } })
+        return
+      }
+    }
 
     const config: AxiosRequestConfig = {
       method: method || 'post',
@@ -67,18 +129,18 @@ const request = ({
     }
 
     try {
-      const res = await Axios(config)
+      const res = await api(config)
       console.log(`%c SUCCESS: ${config?.url}`, 'color: #0ffaac', res.data)
       resolve(res.data)
     } catch (err) {
       if (Axios.isAxiosError(err)) {
         console.error(`%c FAILED: ${config?.url}`, 'color: #FF0000', err.response)
-        throw err
+        reject(err)
       } else {
         console.error(`%c FAILED: ${config?.url}`, 'color: #FF0000', 'Unknown error occurred.')
-        throw { response: { error: 'Unknown error occurred.' } }
+        reject({ response: { error: 'Unknown error occurred.' } })
       }
     }
   })
 
-export default { request }
+export default { request, api }

@@ -185,7 +185,6 @@ const handleDeleteJob = async (jobId: string) => {
           :data="[25, 50, 40, 62, 58, 90]"
           icon="multiUser"
         />
-
         <DashboardGraph
           :title="$t('Dashboard.graphs.activeSubscriptions')"
           :value="dashboardData?.activeSubscriptions"

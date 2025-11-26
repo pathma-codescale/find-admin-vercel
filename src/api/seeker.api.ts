@@ -31,6 +31,7 @@ export const getCandidateByIdApi = async (candidateId: string) => {
   return api.request({
     method: 'get',
     url: `${candidateGetByIdUrl}/${candidateId}`,
+    publicApi: false,
   })
 }
 
@@ -39,6 +40,7 @@ export const createCandidateApi = async (candidateData: Partial<CandidateData>) 
     method: 'post',
     url: candidateCreateUrl,
     body: candidateData,
+    publicApi: false,
   })
 }
 
@@ -46,6 +48,7 @@ export const deleteCandidateByIdApi = async (candidateId: string) => {
   return api.request({
     method: 'delete',
     url: `${candidateDeleteUrl}/${candidateId}`,
+    publicApi: false,
   })
 }
 
@@ -54,6 +57,7 @@ export const updateCandidateApi = async (candidateData: Partial<CandidateData>) 
     method: 'put',
     url: candidateUpdateUrl,
     body: candidateData,
+    publicApi: false,
   })
 }
 
@@ -61,6 +65,7 @@ export const suspendCandidateByIdApi = async (candidateId: string) => {
   return api.request({
     method: 'put',
     url: `${candidateSuspendUrl}/${candidateId}`,
+    publicApi: false,
   })
 }
 
@@ -69,6 +74,7 @@ export const resetCandidatePasswordApi = async (payload: ResetPasswordPayload) =
     method: 'post',
     url: resetCandidatePasswordUrl,
     body: payload,
+    publicApi: false,
   })
 }
 
@@ -76,8 +82,9 @@ export const activateCandidateApi = async (userId: string) => {
   if (!userId) throw new Error('User ID is required')
 
   return api.request({
-    method: 'put', // backend expects an update/PUT request
-    url: `${activeCandidateUrl}/${userId}`, // URL with user ID
+    method: 'put',
+    url: `${activeCandidateUrl}/${userId}`,
+    publicApi: false,
   })
 }
 
@@ -87,6 +94,7 @@ export const displayCandidateByIdApi = async (userId: string) => {
   return api.request({
     method: 'put',
     url: `${displayCandidateUrl}/${userId}`,
+    publicApi: false,
   })
 }
 
@@ -96,6 +104,7 @@ export const hideCandidateByIdApi = async (candidateId: string) => {
   return api.request({
     method: 'put',
     url: `${hideCandidateUrl}/${candidateId}`,
+    publicApi: false,
   })
 }
 
@@ -104,6 +113,7 @@ export const resetPasswordEmailSendCandidateApi = async (email: string) => {
     method: 'post',
     url: resetPasswordEmailSendUrl,
     body: { email },
+    publicApi: false,
   })
 }
 

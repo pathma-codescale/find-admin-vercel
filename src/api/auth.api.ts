@@ -6,7 +6,7 @@ export const LoginApi = (payload: { email: string; password: string }) => {
   return api.request({
     method: 'post',
     url: adminLoginUrl,
-    publicApi: false,
+    publicApi: true,
     body: payload,
   })
 }
