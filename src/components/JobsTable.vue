@@ -13,7 +13,7 @@ interface JobData {
   }
   datePosted: string | Date
   contractTypes: string[]
-  status: 'active' | 'suspended' | 'flagged' | 'hidden'
+  status: 'active' | 'suspended' | 'flagged' | 'hidden' | 'enterprise_deleted' | string
   isBanned?: boolean
   isViewed?: boolean
   image?: string
@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  ban: [email: string, jobId: string, isBanned: boolean]
+  ban: [jobId: string, isBanned: boolean]
   view: [jobId: string, isViewed: boolean]
   edit: [jobId: string]
   delete: [jobId: string]
@@ -75,8 +75,9 @@ const formatLocation = (locationName: string) => {
   return `${parts[0]}, ${parts[1]}`
 }
 
-const handleBan = (email: string, jobId: string, isBanned: boolean) => {
-  emit('ban', email, jobId, isBanned)
+const handleBan = (jobId: string, isBanned: boolean) => {
+  console.log(isBanned)
+  emit('ban', jobId, isBanned)
 }
 
 const handleView = (jobId: string, isViewed: boolean) => {

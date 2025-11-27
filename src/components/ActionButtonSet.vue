@@ -1,19 +1,3 @@
-<template>
-  <div class="flex items-center justify-center">
-    <ActionButton
-      v-for="action in actions"
-      :key="action.type"
-      :icon="action.icon"
-      :title="action.title"
-      :is-active="action.isActive"
-      :type="action.type"
-      :color="action.color"
-      :status="props.status"
-      @click="() => handleAction(action.type)"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 import ActionButton from './ActionButton.vue'
@@ -27,7 +11,7 @@ interface Props {
   isBanned?: boolean
   isViewed?: boolean
   itemId: string
-  itemEmail?: string
+
   entityType?: 'candidate' | 'admin' | 'enterprise'
   status?: 'active' | 'suspended' | 'flagged' | 'hidden'
 }
@@ -39,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  ban: [email: string, id: string, isBanned: boolean]
+  ban: [id: string, isBanned: boolean]
   view: [id: string, isViewed: boolean]
   edit: [id: string]
   delete: [id: string]
@@ -110,7 +94,7 @@ const actions = computed(() => [
 const handleAction = (type: 'ban' | 'view' | 'edit' | 'delete') => {
   switch (type) {
     case 'ban':
-      emit('ban', props.itemEmail, props.itemId, !props.isBanned)
+      emit('ban', props.itemId, !props.isBanned)
       break
     case 'view':
       emit('view', props.itemId, !props.isViewed)
@@ -124,3 +108,19 @@ const handleAction = (type: 'ban' | 'view' | 'edit' | 'delete') => {
   }
 }
 </script>
+
+<template>
+  <div class="flex items-center justify-center">
+    <ActionButton
+      v-for="action in actions"
+      :key="action.type"
+      :icon="action.icon"
+      :title="action.title"
+      :is-active="action.isActive"
+      :type="action.type"
+      :color="action.color"
+      :status="props.status"
+      @click="() => handleAction(action.type)"
+    />
+  </div>
+</template>

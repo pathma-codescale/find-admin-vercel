@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  ban: [email: string, id: string, isBanned: boolean]
+  ban: [id: string, isBanned: boolean]
   view: [id: string | number, isViewed: boolean]
   edit: [id: string | number]
   delete: [id: string]
@@ -48,8 +48,8 @@ const formatLocation = (locationName: string) => {
   return `${parts[0]}, ${parts[1]}\n${parts.slice(2).join(', ')}`
 }
 
-const handleBan = (email: string, id: string, isBanned: boolean) => {
-  emit('ban', email, id, isBanned)
+const handleBan = (id: string, isBanned: boolean) => {
+  emit('ban', id, isBanned)
 }
 
 const handleView = (id: string | number, isViewed: boolean) => {

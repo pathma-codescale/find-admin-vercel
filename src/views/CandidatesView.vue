@@ -285,8 +285,8 @@ const handleBanCandidate = async (candidateId: string, isBanned: boolean) => {
 
     const actionText = isSuspending ? 'Suspend' : 'Activate'
     const confirmText = isSuspending
-      ? t('candidate.descriptions.suspendAccount')
-      : t('candidate.actions.reactivateAccount')
+      ? t('alerts.confirm.suspendAccount')
+      : t('alerts.confirm.reactivateAccount')
 
     const result = await SweetAlert.confirm(
       `${actionText} Account`,

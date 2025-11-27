@@ -35,7 +35,8 @@
     "draft": "Brouillon",
     "subscribed": "Abonné",
     "expired": "Expiré",
-    "trial": "Essai"
+    "trial": "Essai",
+    "enterprise_deleted": "Entreprise supprimée"
   },
   "breadcrumbs": {
     "dashboard": "Tableau de bord",
@@ -269,7 +270,8 @@
     "loadingEnterprises": "Chargement des entreprises...",
     "noJobsFound": "Aucun emploi trouvé",
     "noResultsFound": "Aucun résultat trouvé",
-    "noEnterprisesFound": "Aucune entreprise trouvée"
+    "noEnterprisesFound": "Aucune entreprise trouvée",
+    "showMoreJobs": "Afficher plus d'offres"
   },
   "navigation": {
     "manageUsers": "Gérer les utilisateurs",
@@ -739,25 +741,30 @@
     "draft": "Brouillon"
   },
   "settings": {
-    "editProfile": "Modifier Votre Profil",
+    "editProfile": "Modifier votre profil",
     "updateDetails": "Mettez à jour votre photo et vos informations personnelles ici.",
-    "fullName": "Nom Complet",
+    "fullName": "Nom complet",
     "enterFullName": "Entrez votre nom complet",
-    "profilePicture": "Photo de Profil",
+    "phoneNumber": "Numéro de téléphone",
+    "enterPhoneNumber": "Entrez votre numéro de téléphone (Eg: +1234567890)",
+    "email": "Adresse e-mail",
+    "profilePicture": "Photo de profil",
     "clickToUpload": "Cliquez pour télécharger ou glissez-déposez",
     "imageFormats": "SVG, PNG, JPG ou GIF (max. 800x800px)",
-    "changePassword": "Changer le Mot de Passe",
+    "changePassword": "Changer le mot de passe",
     "updatePassword": "Vous pouvez mettre à jour votre mot de passe ici.",
-    "currentPassword": "Mot de Passe Actuel",
+    "currentPassword": "Mot de passe actuel",
     "enterCurrentPassword": "Entrez votre mot de passe actuel",
-    "newPassword": "Nouveau Mot de Passe",
+    "newPassword": "Nouveau mot de passe",
     "enterNewPassword": "Entrez un nouveau mot de passe",
-    "confirmNewPassword": "Confirmer le Nouveau Mot de Passe",
-    "confirmPassword": "Confirmer le Nouveau Mot de Passe",
+    "confirmNewPassword": "Confirmer le nouveau mot de passe",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
     "language": "Langue",
     "selectLanguage": "Sélectionnez votre langue préférée",
     "profileUpdated": "Profil mis à jour avec succès !",
+    "errorLoadingProfile": "Échec du chargement des données de profil. Veuillez réessayer.",
     "errorUpdatingProfile": "Échec de la mise à jour du profil. Veuillez réessayer.",
+    "errorRemovingImage": "Échec de la suppression de l'image de profil. Veuillez réessayer.",
     "passwordUpdated": "Mot de passe mis à jour avec succès !",
     "errorUpdatingPassword": "Échec de la mise à jour du mot de passe. Veuillez réessayer.",
     "passwordTooShort": "Le nouveau mot de passe doit comporter au moins 8 caractères.",

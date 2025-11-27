@@ -38,6 +38,7 @@ const dotClass = computed(() => {
     case 'active':
       return 'bg-success500'
     case 'suspended':
+    case 'enterprise_deleted':
     case 'inactive':
       return 'bg-error500'
     case 'flagged':
@@ -74,6 +75,8 @@ const statusClass = computed(() => {
     case 'active':
       return 'bg-successBg text-success500'
     case 'suspended':
+    case 'enterprise_deleted':
+    case 'inactive':
       return 'bg-errorBg text-error500'
     case 'flagged':
       return 'bg-flaggedBg text-flagged'

@@ -116,7 +116,7 @@ export const useEnterpriseStore = defineStore('enterprise', {
 
         const processedEnterprises = enterprises.map((e: any) => ({
           ...e,
-          status: e.status ? e.status.toLowerCase() : 'active',
+          // status: e.status ? e.status.toLowerCase() : 'active',
           isBanned: false,
           isViewed: false,
         }))
@@ -326,11 +326,11 @@ export const useEnterpriseStore = defineStore('enterprise', {
       }
     },
 
-    async enableEnterprise(email: string, enterpriseId: string) {
+    async enableEnterprise(enterpriseId: string) {
       this.loading = true
       this.error = null
       try {
-        const response = await EnableEnterpriseApi({ email, enterpriseId })
+        const response = await EnableEnterpriseApi(enterpriseId)
         console.log('Enable Enterprise response:', response)
         return response
       } catch (err: any) {
@@ -342,11 +342,11 @@ export const useEnterpriseStore = defineStore('enterprise', {
       }
     },
 
-    async disableEnterprise(email: string, enterpriseId: string) {
+    async disableEnterprise(enterpriseId: string) {
       this.loading = true
       this.error = null
       try {
-        const response = await DisableEnterpriseApi({ email, enterpriseId })
+        const response = await DisableEnterpriseApi(enterpriseId)
         console.log('Disable Enterprise response:', response)
         return response
       } catch (err: any) {

@@ -56,21 +56,19 @@ export const UpdateEnterpriseApi = async (payload: Record<string, any>) => {
   })
 }
 
-export const EnableEnterpriseApi = async (payload: Record<string, any>) => {
+export const EnableEnterpriseApi = async (enterpriseId: string) => {
   return api.request({
-    method: 'post',
-    url: enableEnterpriseUrl,
+    method: 'put',
+    url: `${enableEnterpriseUrl}/${enterpriseId}`,
     publicApi: false,
-    body: payload,
   })
 }
 
-export const DisableEnterpriseApi = async (payload: Record<string, any>) => {
+export const DisableEnterpriseApi = async (enterpriseId: string) => {
   return api.request({
-    method: 'post',
-    url: disableEnterpriseUrl,
+    method: 'put',
+    url: `${disableEnterpriseUrl}/${enterpriseId}`,
     publicApi: false,
-    body: payload,
   })
 }
 

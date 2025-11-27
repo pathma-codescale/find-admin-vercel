@@ -332,18 +332,14 @@ const addNewEnterprise = () => {
   router.push('/manage-users/createEnterprise')
 }
 
-const handleBanEnterprise = async (
-  enterpriseEmail: string,
-  enterpriseId: string,
-  isBanned: boolean,
-) => {
+const handleBanEnterprise = async (enterpriseId: string, isBanned: boolean) => {
   try {
     const isSuspending = isBanned
 
     const actionText = isSuspending ? 'Suspend' : 'Activate'
     const confirmText = isSuspending
-      ? t('enterprise.descriptions.suspendAccount')
-      : t('enterprise.actions.reactivateAccount')
+      ? t('alerts.confirm.suspendAccount')
+      : t('alerts.confirm.reactivateAccount')
 
     const result = await SweetAlert.confirm(
       `${actionText} Account`,
@@ -354,19 +350,17 @@ const handleBanEnterprise = async (
 
     if (!result.isConfirmed) return
 
-    const email = enterpriseEmail
-
-    if (!email || !enterpriseId) {
-      SweetAlert.error('Missing Data', 'Enterprise email or ID is missing.')
+    if (!enterpriseId) {
+      SweetAlert.error('Missing Data', 'Enterprise  ID is missing.')
       return
     }
 
     if (isSuspending) {
-      await enterpriseStore.disableEnterprise(email, enterpriseId)
+      await enterpriseStore.disableEnterprise(enterpriseId)
       isBanned = true
       // formData.status = 'suspended'
     } else {
-      await enterpriseStore.enableEnterprise(email, enterpriseId)
+      await enterpriseStore.enableEnterprise(enterpriseId)
       isBanned = false
       // formData.status = 'active'
     }
@@ -378,9 +372,8 @@ const handleBanEnterprise = async (
     )
   } catch (err) {
     console.error('Error toggling suspension:', err)
-    SweetAlert.error(t('common.error'), t('enterprise.alerts.suspendFailed'))
+    SweetAlert.error(t('common.error'), t('alerts.error.suspendingAccount'))
   }
-  console.log(`Enterprise ${enterpriseId} ban status changed to:`, isBanned)
 }
 
 const handleViewEnterprise = (enterpriseId: string) => {

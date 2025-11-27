@@ -2,13 +2,9 @@
 import { reactive, computed, onMounted, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { storeToRefs } from 'pinia'
+import { useEnterpriseStore } from '@/store/enterprise/useEnterpriseStore'
 import { SweetAlert } from '@/utils/sweetAlert'
-import DashboardHeader from '@/components/DashboardHeader.vue'
-import LeftPanel from '@/components/LeftPanel.vue'
-import Breadcrumb from '@/components/Breadcrumb.vue'
-import MultiSelectDropdown from '@/components/MultiSelectDropdown.vue'
-import SelectCurrency from '@/components/SelectCurrency.vue'
-import LocationMap from '@/components/LocationMap.vue'
 import { useJobStore } from '@/store/job/useJobStore'
 import {
   getSkillsOptions,
@@ -17,8 +13,12 @@ import {
   getConditionOptions,
 } from '@/constants/selectorOptionsNew'
 
-import { useEnterpriseStore } from '@/store/enterprise/useEnterpriseStore'
-import { storeToRefs } from 'pinia'
+import DashboardHeader from '@/components/DashboardHeader.vue'
+import LeftPanel from '@/components/LeftPanel.vue'
+import Breadcrumb from '@/components/Breadcrumb.vue'
+import MultiSelectDropdown from '@/components/MultiSelectDropdown.vue'
+import SelectCurrency from '@/components/SelectCurrency.vue'
+import LocationMap from '@/components/LocationMap.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -26,18 +26,14 @@ const route = useRoute()
 const jobStore = useJobStore()
 const enterpriseStore = useEnterpriseStore()
 
-// Get reactive state from enterprise store
 const { enterprises, loading: enterprisesLoading } = storeToRefs(enterpriseStore)
 
-// Enterprise search state
 const enterpriseSearch = ref('')
 const showEnterpriseDropdown = ref(false)
 const selectedEnterpriseId = ref<string | null>(null)
 
-// Debounce timer for search
 let searchTimeout: ReturnType<typeof setTimeout> | null = null
 
-// Watch for enterprise search changes and trigger API call
 watch(enterpriseSearch, (newValue) => {
   if (searchTimeout) {
     clearTimeout(searchTimeout)
@@ -52,30 +48,26 @@ watch(enterpriseSearch, (newValue) => {
     showEnterpriseDropdown.value = true
     await enterpriseStore.searchEnterprises(newValue)
     console.log('Enterprises found:', enterprises.value)
-  }, 300) // 300ms debounce
+  }, 300)
 })
 
-// Select enterprise from dropdown
 const selectedEnterpriseDetails = ref<{
   brand_name: string
   logo?: string
 } | null>(null)
 
-// Select enterprise from dropdown
 const selectEnterprise = (enterprise: any) => {
   formData.hiringEnterprise = enterprise.brand_name
   selectedEnterpriseId.value = enterprise.enterpriseId
   enterpriseSearch.value = enterprise.brand_name
   showEnterpriseDropdown.value = false
 
-  // Store enterprise details to show logo and name
   selectedEnterpriseDetails.value = {
     brand_name: enterprise.brand_name,
     logo: enterprise.logo,
   }
 }
 
-// Clear selected enterprise
 const clearSelectedEnterprise = () => {
   formData.hiringEnterprise = ''
   selectedEnterpriseId.value = null
@@ -83,14 +75,12 @@ const clearSelectedEnterprise = () => {
   selectedEnterpriseDetails.value = null
 }
 
-// Handle blur with delay to allow click events
 const handleEnterpriseBlur = () => {
   setTimeout(() => {
     showEnterpriseDropdown.value = false
   }, 200)
 }
 
-// Handle focus - show dropdown if there are search results
 const handleEnterpriseFocus = () => {
   if (enterpriseSearch.value && enterprises.value.length > 0) {
     showEnterpriseDropdown.value = true
@@ -108,7 +98,7 @@ const fetchEnterpriseDetails = async (companyId: string) => {
     }
   } catch (error) {
     console.error('Error fetching enterprise details:', error)
-    // Fallback to just showing the name
+
     selectedEnterpriseDetails.value = {
       brand_name: formData.hiringEnterprise,
     }
@@ -154,13 +144,11 @@ interface FormData {
   jobId?: string
 }
 
-// Available options for dropdowns
 const availableSkills = getSkillsOptions(t)
 const availableQualities = getQualitiesOptions(t)
 const availableDomains = getDomainOptions(t)
 const availableBenefits = getConditionOptions(t)
 
-// Determine if we're in edit mode or view mode
 const isEditMode = computed(() => {
   return route.name === 'edit-job' || route.params.id !== undefined
 })
@@ -197,15 +185,12 @@ const formData = reactive<FormData>({
   initialStatus: 'active',
 })
 
-// Transform form data to API format
 const transformFormDataToApi = () => {
-  // Build contract types array (using API format: CDI, CDD, STAGE)
   const contractTypes = []
   if (formData.contractTypes.permanent) contractTypes.push('CDI')
   if (formData.contractTypes.fixedTerm) contractTypes.push('CDD')
   if (formData.contractTypes.internship) contractTypes.push('STAGE')
 
-  // Build working time array (using API format: temps_plein, temps_partiel)
   const workingTime = []
   if (formData.workingTime.fullTime) workingTime.push('temps_plein')
   if (formData.workingTime.partTime) workingTime.push('temps_partiel')
@@ -247,22 +232,18 @@ const transformFormDataToApi = () => {
   }
 }
 
-// Transform API data to form format
 const transformApiDataToForm = (job: any) => {
-  // Parse contract types (API uses: CDI, CDD, STAGE)
   const contractTypes = {
     permanent: job.contract?.includes('CDI') || false,
     fixedTerm: job.contract?.includes('CDD') || false,
     internship: job.contract?.includes('STAGE') || false,
   }
 
-  // Parse working time (API uses: temps_plein, temps_partiel)
   const workingTime = {
     fullTime: job.workingTime?.includes('temps_plein') || false,
     partTime: job.workingTime?.includes('temps_partiel') || false,
   }
 
-  // Set form data
   Object.assign(formData, {
     jobId: job.jobId,
     hiringEnterprise: job.companyName || '',
@@ -295,16 +276,13 @@ const transformApiDataToForm = (job: any) => {
     initialStatus: job.status?.toLowerCase() || 'active',
   })
 
-  // Store the enterprise ID if available
   if (job.enterpriseId) {
     selectedEnterpriseId.value = job.enterpriseId
   }
 
-  // Sync enterprise search with selected value
   enterpriseSearch.value = job.companyName || ''
 }
 
-// Methods for custom additions
 const handleCustomSkillAdd = (customSkill: string) => {
   console.log('Custom skill added:', customSkill)
 }
@@ -397,7 +375,6 @@ const benefitsWithLabels = computed(() => {
   })
 })
 
-// Load job data for editing
 const loadJobData = async (jobId: string) => {
   try {
     await jobStore.getJob(jobId)
@@ -405,7 +382,6 @@ const loadJobData = async (jobId: string) => {
     if (jobStore.selectedJob) {
       transformApiDataToForm(jobStore.selectedJob)
 
-      // Fetch enterprise details for both view and edit mode
       if (jobStore.selectedJob.companyId) {
         await fetchEnterpriseDetails(jobStore.selectedJob.companyId)
       }
@@ -422,7 +398,6 @@ const loadJobData = async (jobId: string) => {
   }
 }
 
-// Form validation
 const validateForm = (): boolean => {
   if (!formData.hiringEnterprise.trim()) {
     SweetAlert.validation.required(t('job.hiringEnterprise'))
@@ -439,14 +414,12 @@ const validateForm = (): boolean => {
     return false
   }
 
-  // Check if at least one contract type is selected
   const hasContractType = Object.values(formData.contractTypes).some((value) => value === true)
   if (!hasContractType) {
     SweetAlert.validation.required(t('job.contractTypes'))
     return false
   }
 
-  // Check if at least one working time is selected
   const hasWorkingTime = Object.values(formData.workingTime).some((value) => value === true)
   if (!hasWorkingTime) {
     SweetAlert.validation.required(t('job.workingTime'))
@@ -461,11 +434,9 @@ const validateForm = (): boolean => {
   return true
 }
 
-// Submit form (create or update)
 const submitForm = async () => {
   if (!validateForm()) return
 
-  // Show loading
   SweetAlert.loading(
     isEditMode.value ? t('alerts.loading.updatingJob') : t('alerts.loading.publishingJob'),
     t('alerts.loading.pleaseWait'),
@@ -475,7 +446,6 @@ const submitForm = async () => {
     const apiData = transformFormDataToApi()
 
     if (isEditMode.value && formData.jobId) {
-      // Update existing job
       await jobStore.updateJob(formData.jobId, apiData)
 
       if (jobStore.error) {
@@ -486,7 +456,6 @@ const submitForm = async () => {
         router.push('/manage-jobs')
       })
     } else {
-      // Create new job
       await jobStore.createJob(apiData)
       console.log('createjob**** ', apiData)
 
@@ -516,11 +485,9 @@ const submitForm = async () => {
 
 const saveAsDraft = async () => {
   try {
-    // Set status to draft
     const currentStatus = formData.initialStatus
     formData.initialStatus = 'draft'
 
-    // Show loading
     SweetAlert.loading(t('alerts.loading.savingDraft'))
 
     const apiData = transformFormDataToApi()
@@ -535,10 +502,8 @@ const saveAsDraft = async () => {
       throw new Error(jobStore.error)
     }
 
-    // Show success message
     SweetAlert.toast.success(t('alerts.success.draftSaved'))
 
-    // Navigate to manage jobs
     setTimeout(() => {
       router.push('/manage-jobs')
     }, 1000)
@@ -548,7 +513,6 @@ const saveAsDraft = async () => {
   }
 }
 
-// Cancel form
 const cancelForm = async () => {
   const result = await SweetAlert.confirm(
     t('alerts.titles.cancelChanges'),
@@ -562,7 +526,6 @@ const cancelForm = async () => {
   }
 }
 
-// Location handlers
 const googleMapsApiKey = 'AIzaSyBNQFackbUlkEUxb2LIouJ1r9jJZxIP7Nw'
 const defaultMapCenter = { lat: 32.0809, lng: -81.0912 }
 
@@ -576,9 +539,7 @@ const onRadiusChanged = (data: { radius: number; location: LocationDetails | nul
   formData.serviceRadius = Math.round(data.radius * 1000)
 }
 
-// Lifecycle
 onMounted(async () => {
-  // If we're in edit mode or view mode, load the job data
   if ((isEditMode.value || isViewMode.value) && route.params.id) {
     await loadJobData(route.params.id as string)
   }

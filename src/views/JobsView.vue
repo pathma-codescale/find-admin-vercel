@@ -25,7 +25,7 @@ interface JobData {
   }
   datePosted: string | Date
   contractTypes: string[]
-  status: 'active' | 'suspended' | 'hidden'
+  status: 'active' | 'suspended' | 'hidden' | 'enterprise_deleted' | string
   isBanned?: boolean
   isViewed?: boolean
   image?: string
@@ -54,7 +54,7 @@ const filters = ref<FilterOptions>({
 
 const transformedJobs = computed((): JobData[] => {
   return jobs.value.map((job): JobData => {
-    let status: 'active' | 'suspended' | 'hidden' = 'active'
+    let status: 'active' | 'suspended' | 'enterprise_deleted' | 'hidden' = 'active'
 
     if (job.status === 'SUSPENDED') {
       status = 'suspended'
@@ -62,6 +62,8 @@ const transformedJobs = computed((): JobData[] => {
       status = 'active'
     } else if (job.status === 'HIDDEN') {
       status = 'hidden'
+    } else if (job.status === 'ENTERPRISE_DELETED') {
+      status = 'enterprise_deleted'
     }
 
     return {
@@ -74,7 +76,7 @@ const transformedJobs = computed((): JobData[] => {
       datePosted: job.createdAt,
       contractTypes: job.contract || [],
       status,
-      isBanned: job.status === 'SUSPENDED',
+      isBanned: job.isSuspended,
       isViewed: false,
       image: job.companyLogo || undefined,
     }
@@ -339,8 +341,26 @@ const formatDateRange = (startDate: string, endDate: string) => {
   return ''
 }
 
-const handleBanJob = async (email: string, jobId: string, isBanned: boolean) => {
+const handleBanJob = async (jobId: string, isBanned: boolean) => {
   try {
+    const actionText = isBanned ? 'Suspend' : 'Activate'
+    const confirmText = isBanned
+      ? t('alerts.confirm.suspendAccount')
+      : t('alerts.confirm.reactivateAccount')
+
+    const result = await SweetAlert.confirm(
+      `${actionText} Account`,
+      confirmText,
+      t('common.yes'),
+      t('common.cancel'),
+    )
+
+    if (!result.isConfirmed) return
+
+    if (!jobId) {
+      SweetAlert.error('Missing Data', 'Enterprise  ID is missing.')
+      return
+    }
     if (!isBanned) {
       await jobStore.EnableJob(jobId)
     } else {

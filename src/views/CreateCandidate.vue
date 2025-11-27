@@ -1,25 +1,22 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import DashboardHeader from '@/components/DashboardHeader.vue'
-import LeftPanel from '@/components/LeftPanel.vue'
-import Breadcrumb from '@/components/Breadcrumb.vue'
-import MultiSelectDropdown from '@/components/MultiSelectDropdown.vue'
-import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
 import { useSeekerStore } from '@/store/seeker/useSeekerStore'
 import { useCommonStore } from '@/store/common/useCommonStore'
 import { toast } from 'vue-sonner'
 import { AxiosError } from 'axios'
-
+import { useI18n } from 'vue-i18n'
 import {
-  // getBeginningOptions,
   getContractOptions,
   getDomainOptions,
   getQualitiesOptions,
   getSkillsOptions,
   getWorkingTimeOptions,
 } from '@/constants/selectorOptionsNew'
-import { useI18n } from 'vue-i18n'
+import DashboardHeader from '@/components/DashboardHeader.vue'
+import LeftPanel from '@/components/LeftPanel.vue'
+import Breadcrumb from '@/components/Breadcrumb.vue'
+import MultiSelectDropdown from '@/components/MultiSelectDropdown.vue'
 import SweetAlert from '@/utils/sweetAlert'
 
 const { t } = useI18n()
@@ -324,31 +321,39 @@ const sendPasswordReset = async () => {
 }
 
 const toggleSuspendAccount = async (candidateId: string) => {
-  if (!candidateId) return
-
-  const candidate = seekerStore.candidates.find((c) => c.id === candidateId)
-  if (!candidate) return
-
-  const action = candidate.status === 'suspended' ? 'activate' : 'suspend'
-  const confirmMessage =
+  const suspended = formData.status === 'suspended'
+  console.log(formData)
+  const action = suspended ? 'activate' : 'suspend'
+  const confirmText =
     action === 'suspend'
-      ? 'Are you sure you want to suspend this candidate?'
-      : 'Are you sure you want to activate this candidate?'
+      ? t('alerts.confirm.suspendAccount')
+      : t('alerts.confirm.reactivateAccount')
 
-  if (!confirm(confirmMessage)) return
+  const result = await SweetAlert.confirm(
+    `${action} Account`,
+    confirmText,
+    t('common.yes'),
+    t('common.cancel'),
+  )
+
+  if (!result.isConfirmed) return
 
   try {
-    let updatedUser
     if (action === 'suspend') {
-      updatedUser = await seekerStore.suspendCandidate(candidateId)
-      toast.success('Candidate suspended successfully!')
+      await seekerStore.suspendCandidate(candidateId)
     } else {
-      updatedUser = await seekerStore.activateCandidate(candidateId)
-      toast.success('Candidate activated successfully!')
+      await seekerStore.activateCandidate(candidateId)
     }
+    SweetAlert.success(
+      t('common.success'),
+      action === 'suspend'
+        ? t('alerts.success.accountSuspended')
+        : t('alerts.success.accountReactivated'),
+    )
+    await loadCandidateData(route.params.id as string)
   } catch (error: any) {
     console.error(`Error trying to ${action} candidate:`, error)
-    toast.error(`Failed to ${action} candidate: ${error.message || error}`)
+    SweetAlert.error(t('common.error'), t('enterprise.alerts.suspendFailed'))
   }
 }
 
@@ -978,13 +983,13 @@ const cancelForm = () => {
                     type="button"
                     :class="[
                       'min-w-[20vw] px-4 py-2 rounded-md transition-colors',
-                      formData.isAccountSuspended
+                      formData.status === 'suspended'
                         ? 'bg-green-600 hover:bg-green-500 text-white'
                         : 'bg-yellow-600 hover:bg-yellow-500 text-white',
                     ]"
                   >
                     {{
-                      formData.isAccountSuspended
+                      formData.status === 'suspended'
                         ? $t('candidate.actions.reactivateAccount')
                         : $t('candidate.actions.suspendAccount')
                     }}

@@ -307,8 +307,8 @@ const toggleAccountSuspension = async () => {
 
     const actionText = isSuspending ? 'Suspend' : 'Activate'
     const confirmText = isSuspending
-      ? t('enterprise.confirm.suspend')
-      : t('enterprise.confirm.unsuspend')
+      ? t('alerts.confirm.suspendAccount')
+      : t('alerts.confirm.reactivateAccount')
 
     const result = await SweetAlert.confirm(
       `${actionText} Account`,
@@ -319,20 +319,19 @@ const toggleAccountSuspension = async () => {
 
     if (!result.isConfirmed) return
 
-    const email = formData.emailAddress
     const enterpriseId = formData.enterpriseId
 
-    if (!email || !enterpriseId) {
+    if (!enterpriseId) {
       SweetAlert.error('Missing Data', 'Enterprise email or ID is missing.')
       return
     }
 
     if (isSuspending) {
-      await enterpriseStore.disableEnterprise(email, enterpriseId)
+      await enterpriseStore.disableEnterprise(enterpriseId)
       formData.isAccountSuspended = true
       formData.status = 'suspended'
     } else {
-      await enterpriseStore.enableEnterprise(email, enterpriseId)
+      await enterpriseStore.enableEnterprise(enterpriseId)
       formData.isAccountSuspended = false
       formData.status = 'active'
     }

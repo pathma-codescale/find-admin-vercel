@@ -33,16 +33,22 @@ export const useJobStore = defineStore('job', {
     totalCount: 0,
     pageSize: 10,
     pages: {},
+    isSuspended: false,
   }),
 
   actions: {
     async getAllJobs({ limit = 10, page = 1, loadMore = false } = {}) {
       if (this.loading) return
-      this.jobs = this.pages[page]
       this.loading = true
       this.error = null
 
       try {
+        if (this.pages[page] && !loadMore) {
+          this.jobs = this.pages[page]
+          this.currentPage = page
+          this.loading = false
+          return
+        }
         const params: { limit?: number; lastEvaluatedKey?: string } = { limit }
 
         if (loadMore && this.pagination.lastEvaluatedKey) {
@@ -54,7 +60,7 @@ export const useJobStore = defineStore('job', {
 
         const processedJobs = jobs.map((e: any) => ({
           ...e,
-          status: e.status ? e.status.toLowerCase() : 'active',
+          // status: e.status ? e.status.toLowerCase() : 'active',
           isBanned: false,
           isViewed: false,
         }))
@@ -111,14 +117,16 @@ export const useJobStore = defineStore('job', {
         if (loadMore && this.pagination.lastEvaluatedKey) {
           params.lastEvaluatedKey = this.pagination.lastEvaluatedKey
         }
-        console.log(filters)
+
         if (filters.startDate) {
           params.startDate = filters.startDate
         }
         if (filters.endDate) {
           params.endDate = filters.endDate
         }
-
+        if (filters.status) {
+          params.status = filters.status
+        }
         const response = await FilterJobsApi(params)
         const { jobs, count, pagination, filters: appliedFilters } = response
 

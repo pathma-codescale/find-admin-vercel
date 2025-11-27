@@ -7,8 +7,10 @@ import {
   EnableAdminApi,
   GetAdminByIdApi,
   GetAllAdminsApi,
+  resetAdminPasswordApi,
   resetAdminPasswordEmailSendApi,
   UpdateAdminApi,
+  type ResetPasswordPayload,
 } from '@/api/admin.api'
 
 interface Admin {
@@ -195,6 +197,20 @@ export const useAdminStore = defineStore('admin', {
       }
     },
 
+    async resetAdminPassword(payload: ResetPasswordPayload) {
+      this.loading = true
+      this.error = null
+
+      try {
+        const response = await resetAdminPasswordApi(payload)
+        return response
+      } catch (error: any) {
+        this.error = error.message || 'Failed to reset password'
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
     // Reset filters and fetch all Admins
     async resetAndFetchAll() {
       this.appliedFilters = null

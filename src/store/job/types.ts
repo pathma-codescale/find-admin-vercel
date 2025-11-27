@@ -41,6 +41,7 @@ export interface Job {
   domain: string[]
   companyName: string
   companyLogo: string
+  isSuspended: boolean
 }
 
 export interface JobState {
@@ -64,4 +65,5 @@ export interface JobState {
     contract: string[] | null
     sortBy: string
   }
+  isSuspended: boolean
 }

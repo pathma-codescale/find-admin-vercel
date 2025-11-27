@@ -71,7 +71,7 @@ const mappedJobs = computed<JobData[]>(() => {
     company: e.companyName,
     location: { locationName: e.location.locationName },
     datePosted: e.createdAt,
-    isBanned: e.status !== 'ACTIVE',
+    isBanned: e.isSuspended,
     image: e.companyLogo,
   }))
 })
@@ -114,8 +114,26 @@ const handleViewEnterpriseProfile = (enterpriseId: string) => {
   console.log(enterpriseId)
   router.push(`/manage-users/enterprises/${enterpriseId}/view`)
 }
-const handleBanJob = async (email: string, jobId: string, isBanned: boolean) => {
+const handleBanJob = async (jobId: string, isBanned: boolean) => {
   try {
+    const actionText = isBanned ? 'Suspend' : 'Activate'
+    const confirmText = isBanned
+      ? t('alerts.confirm.suspendAccount')
+      : t('alerts.confirm.reactivateAccount')
+
+    const result = await SweetAlert.confirm(
+      `${actionText} Account`,
+      confirmText,
+      t('common.yes'),
+      t('common.cancel'),
+    )
+
+    if (!result.isConfirmed) return
+
+    if (!jobId) {
+      SweetAlert.error('Missing Data', 'Enterprise  ID is missing.')
+      return
+    }
     if (!isBanned) {
       await jobStore.EnableJob(jobId)
     } else {
@@ -125,7 +143,7 @@ const handleBanJob = async (email: string, jobId: string, isBanned: boolean) => 
     await jobStore.getAllJobs()
     SweetAlert.success(
       t('common.success'),
-      !isBanned ? 'Job suspended successfully!' : 'Job reactivated successfully!',
+      isBanned ? 'Job suspended successfully!' : 'Job reactivated successfully!',
     )
   } catch (error) {
     console.error('Error updating job status:', error)

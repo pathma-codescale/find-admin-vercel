@@ -35,7 +35,8 @@
     "draft": "Draft",
     "subscribed": "Subscribed",
     "expired": "Expired",
-    "trial": "Trial"
+    "trial": "Trial",
+    "enterprise_deleted": "Enterprise Deleted"
   },
   "breadcrumbs": {
     "dashboard": "Dashboard",
@@ -269,7 +270,8 @@
     "loadingEnterprises": "Loading Enterprises...",
     "noResultsFound": "No results found",
     "noJobsFound": "No jobs found",
-    "noEnterprisesFound": "No enterprises found"
+    "noEnterprisesFound": "No enterprises found",
+    "showMoreJobs": "Show more jobs"
   },
   "navigation": {
     "manageUsers": "Manage Users",
@@ -752,6 +754,9 @@
     "updateDetails": "Update your photo and personal details here.",
     "fullName": "Full Name",
     "enterFullName": "Enter full name",
+    "phoneNumber": "Phone Number",
+    "enterPhoneNumber": "Enter phone number (Eg: +1234567890)",
+    "email": "Email",
     "profilePicture": "Profile Picture",
     "clickToUpload": "Click to upload or drag and drop",
     "imageFormats": "SVG, PNG, JPG or GIF (max. 800x800px)",
@@ -766,7 +771,9 @@
     "language": "Language",
     "selectLanguage": "Select your preferred language",
     "profileUpdated": "Profile updated successfully!",
+    "errorLoadingProfile": "Failed to load profile data. Please try again.",
     "errorUpdatingProfile": "Failed to update profile. Please try again.",
+    "errorRemovingImage": "Failed to remove profile image. Please try again.",
     "passwordUpdated": "Password updated successfully!",
     "errorUpdatingPassword": "Failed to update password. Please try again.",
     "passwordTooShort": "New password must be at least 8 characters long.",

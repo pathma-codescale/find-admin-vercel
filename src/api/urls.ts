@@ -41,6 +41,7 @@ export const enableAdminUrl = BASE_URL + '/adminUsers/enable'
 export const disableAdminUrl = BASE_URL + '/adminUsers/disable'
 export const deleteAdminUrl = BASE_URL + '/adminUsers/delete'
 export const resetAdminPasswordEmailSendUrl = BASE_URL + '/adminUsers/send-reset-password'
+export const resetAdminPasswordUrl = BASE_URL + '/adminUsers/resetpassword/'
 
 export const getSignedUrl = BASE_URL + '/presigned-url'
 export const deleteImageUrl = BASE_URL + '/image/delete'

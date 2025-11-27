@@ -64,10 +64,8 @@ api.interceptors.response.use(
     return response
   },
   async (error) => {
-    const originalRequest = error.config
-
     if (error.response) {
-      if (error.response.status === 401 && !originalRequest._retry) {
+      if (error.response.status === 401 && error.response.data?.error === 'UNAUTHORIZED') {
         const errorMessage =
           error.response.data?.message || 'Your session has expired. Please log in again.'
         handleLogout(errorMessage)

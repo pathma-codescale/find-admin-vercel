@@ -84,7 +84,7 @@ export const useSeekerStore = defineStore('seeker', {
 
         const processedCandidates = candidates.map((c) => ({
           ...c,
-          status: c.status ? c.status.toLowerCase() : 'active',
+          // status: c.status ? c.status.toLowerCase() : 'active',
           isBanned: false,
           isViewed: false,
         }))
@@ -113,7 +113,7 @@ export const useSeekerStore = defineStore('seeker', {
       if (!this.pagination.lastEvaluatedKey || this.loading) return
 
       if (this.isFiltering) {
-        return this.filterCandidates(this.activeFilters, true)
+        return this.filterCandidates(this.activeFilters)
       }
 
       return this.fetchAllCandidates({

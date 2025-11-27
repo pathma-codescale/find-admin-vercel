@@ -14,7 +14,7 @@ export const GetAllJobsApi = (params?: any) =>
     method: 'get',
     url: getAllJobsUrl,
     publicApi: false,
-    data: { params },
+    data: params,
   })
 
 export const GetJobApi = (jobId: string) => {

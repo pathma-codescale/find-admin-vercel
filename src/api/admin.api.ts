@@ -8,7 +8,14 @@ import {
   enableAdminUrl,
   deleteAdminUrl,
   resetAdminPasswordEmailSendUrl,
+  resetAdminPasswordUrl,
 } from './urls'
+
+export interface ResetPasswordPayload {
+  email: string
+  oldPassword: string
+  newPassword: string
+}
 
 export const GetAllAdminsApi = async (params?: string) => {
   return api.request({
@@ -74,6 +81,15 @@ export const resetAdminPasswordEmailSendApi = async (email: string) => {
     method: 'post',
     url: resetAdminPasswordEmailSendUrl,
     body: { email },
+    publicApi: false,
+  })
+}
+
+export const resetAdminPasswordApi = async (payload: ResetPasswordPayload) => {
+  return api.request({
+    method: 'post',
+    url: resetAdminPasswordUrl,
+    body: payload,
     publicApi: false,
   })
 }

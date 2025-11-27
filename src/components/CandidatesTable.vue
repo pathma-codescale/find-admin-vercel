@@ -15,7 +15,7 @@ interface CandidateData {
   phoneNumber?: string
   profilePhotoUrl?: string
   dateOfBirth?: string
-  status?: 'active' | 'suspended' | 'flagged' | 'hidden'
+  status?: string
   isBanned?: boolean
   isViewed?: boolean
   location?: { locationName?: string }
