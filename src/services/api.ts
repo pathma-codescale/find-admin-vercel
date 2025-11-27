@@ -3,6 +3,7 @@ import Axios, { type AxiosRequestConfig, type AxiosRequestHeaders, type Method }
 import { useAuthStore } from '@/store/auth/useAuthStore'
 import router from '@/router'
 import { SweetAlert } from '@/utils/sweetAlert'
+import { toast } from 'vue-sonner'
 
 const api = Axios.create({
   baseURL: import.meta.env.VITE_API_URL || '',
@@ -133,9 +134,11 @@ const request = ({
     } catch (err) {
       if (Axios.isAxiosError(err)) {
         console.error(`%c FAILED: ${config?.url}`, 'color: #FF0000', err.response)
+        toast.error(err.response?.data?.message)
         reject(err)
       } else {
         console.error(`%c FAILED: ${config?.url}`, 'color: #FF0000', 'Unknown error occurred.')
+        toast.error({ response: { error: 'Unknown error occurred.' } })
         reject({ response: { error: 'Unknown error occurred.' } })
       }
     }

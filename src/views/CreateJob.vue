@@ -485,7 +485,6 @@ const submitForm = async () => {
 
 const saveAsDraft = async () => {
   try {
-    const currentStatus = formData.initialStatus
     formData.initialStatus = 'draft'
 
     SweetAlert.loading(t('alerts.loading.savingDraft'))
