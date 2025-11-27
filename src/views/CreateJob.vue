@@ -526,7 +526,7 @@ const cancelForm = async () => {
   }
 }
 
-const googleMapsApiKey = 'AIzaSyBNQFackbUlkEUxb2LIouJ1r9jJZxIP7Nw'
+const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 const defaultMapCenter = { lat: 32.0809, lng: -81.0912 }
 
 const onLocationSelected = (location: LocationDetails) => {
