@@ -537,7 +537,9 @@
       "jobUpdated": "Offre d'emploi mise à jour avec succès !",
       "draftSaved": "Brouillon enregistré avec succès !",
       "adminAdded": "Administrateur ajouté avec succès !",
-      "adminUpdated": "Administrateur mis à jour avec succès !"
+      "adminUpdated": "Administrateur mis à jour avec succès !",
+      "accountHidden": "Compte masqué avec succès !",
+      "accountVisible": "Compte rendu visible avec succès !"
     },
     "error": {
       "loadingData": "Échec du chargement des données de {type}. Veuillez réessayer.",
@@ -546,14 +548,18 @@
       "sendingPasswordReset": "Erreur lors de l'envoi de l'e-mail de réinitialisation du mot de passe.",
       "suspendingAccount": "Erreur lors de la suspension du compte.",
       "deletingAccount": "Erreur lors de la suppression du compte.",
-      "savingDraft": "Erreur lors de l'enregistrement du brouillon"
+      "savingDraft": "Erreur lors de l'enregistrement du brouillon",
+      "hideAccount": "Erreur lors du masquage du compte.",
+      "unhideAccount": "Erreur lors de l'affichage du compte."
     },
     "confirm": {
       "cancelChanges": "Êtes-vous sûr de vouloir annuler ? Toutes les modifications non enregistrées seront perdues.",
       "suspendAccount": "Êtes-vous sûr de vouloir suspendre ce compte ?",
       "reactivateAccount": "Êtes-vous sûr de vouloir réactiver ce compte ?",
       "deleteAccount": "Êtes-vous sûr de vouloir supprimer ce compte ? Cette action ne peut pas être annulée.",
-      "deleteAccountFinal": "Cela supprimera définitivement toutes les données de l'utilisateur. Êtes-vous absolument sûr ?"
+      "deleteAccountFinal": "Cela supprimera définitivement toutes les données de l'utilisateur. Êtes-vous absolument sûr ?",
+      "hideAccount": "Êtes-vous sûr de vouloir masquer ce compte ?",
+      "unhideAccount": "Êtes-vous sûr de vouloir rendre ce compte visible ?"
     },
     "loading": {
       "addingEnterprise": "Ajout de l'entreprise...",
@@ -565,7 +571,12 @@
       "savingDraft": "Enregistrement du brouillon...",
       "pleaseWait": "Veuillez patienter pendant que nous traitons votre demande.",
       "sendingEmail": "Envoi de l'e-mail...",
-      "deletingData": "Suppression en cours..."
+      "deletingData": "Suppression en cours...",
+      "hidingAccount": "Masquage du compte en cours...",
+      "unhidingAccount": "Affichage du compte en cours...",
+      "loadingData": "Chargement des données...",
+      "suspendingAccount": "Suspension du compte en cours...",
+      "reactivatingAccount": "Réactivation du compte en cours..."
     },
     "titles": {
       "validationError": "Erreur de validation",
@@ -577,7 +588,9 @@
       "reactivateAccount": "Réactiver le compte",
       "deleteAccount": "Supprimer le compte",
       "finalConfirmation": "Confirmation finale",
-      "passwordResetSent": "Réinitialisation du mot de passe envoyée"
+      "passwordResetSent": "Réinitialisation du mot de passe envoyée",
+      "hideAccount": "Masquer le compte",
+      "unhideAccount": "Afficher le compte"
     },
     "buttons": {
       "continueEditing": "Continuer à modifier",
@@ -819,7 +832,9 @@
       "active": "Actif",
       "suspended": "Suspendu",
       "flagged": "Signalé",
-      "hidden": "Caché"
+      "hidden": "Caché",
+      "visible": "Visible",
+      "enterpriseDeleted": "Entreprise supprimée"
     },
     "subscription": {
       "all": "Tous les abonnements",

@@ -60,7 +60,7 @@ const transformedJobs = computed((): JobData[] => {
       status = 'suspended'
     } else if (job.status === 'VISIBLE') {
       status = 'active'
-    } else if (job.status === 'HIDDEN') {
+    } else if (job.status === 'HIDE') {
       status = 'hidden'
     } else if (job.status === 'ENTERPRISE_DELETED') {
       status = 'enterprise_deleted'
@@ -136,21 +136,17 @@ watch(searchQuery, async (newValue) => {
   }, 300)
 })
 
-// Helper function to convert filter format
 const convertFiltersForApi = (filterOptions: FilterOptions & { jobTitle?: string }) => {
   const apiFilters: any = {}
 
-  // Convert status
   if (filterOptions.status.length > 0) {
     apiFilters.status = filterOptions.status.map((s) => s.toUpperCase())
   }
 
-  // Convert contract types
   if (filterOptions.contractTypes.length > 0) {
     apiFilters.contract = filterOptions.contractTypes
   }
 
-  // Add date range - dates should already be in ISO format from the filter component
   if (filterOptions.startDate) {
     apiFilters.startDate = filterOptions.startDate
   }
@@ -158,7 +154,6 @@ const convertFiltersForApi = (filterOptions: FilterOptions & { jobTitle?: string
     apiFilters.endDate = filterOptions.endDate
   }
 
-  // Convert sortBy format
   const sortMapping: Record<string, string> = {
     'datePosted-desc': 'datePosted-newest',
     'datePosted-asc': 'datePosted-oldest',
@@ -167,7 +162,6 @@ const convertFiltersForApi = (filterOptions: FilterOptions & { jobTitle?: string
   }
   apiFilters.sortBy = sortMapping[filterOptions.sortBy] || 'datePosted-newest'
 
-  // Add search query if exists
   if (filterOptions.jobTitle) {
     apiFilters.jobTitle = filterOptions.jobTitle
   }
@@ -175,7 +169,6 @@ const convertFiltersForApi = (filterOptions: FilterOptions & { jobTitle?: string
   return apiFilters
 }
 
-// Build filter parameters for pagination
 const buildFilterParams = () => {
   const params: Record<string, any> = {}
 
@@ -387,10 +380,24 @@ const handleBanJob = async (jobId: string, isBanned: boolean) => {
 }
 
 const handleViewJob = async (jobId: string | number) => {
+  const enterpriseDeleted =
+    transformedJobs.value.find((job) => job.id === jobId)?.status === 'enterprise_deleted'
+
+  if (enterpriseDeleted) {
+    SweetAlert.error('Cannot View Job', 'The enterprise associated with this job has been deleted.')
+    return
+  }
   router.push({ name: 'viewJob', params: { id: jobId } })
 }
 
 const handleEditJob = async (jobId: string) => {
+  const enterpriseDeleted =
+    transformedJobs.value.find((job) => job.id === jobId)?.status === 'enterprise_deleted'
+
+  if (enterpriseDeleted) {
+    SweetAlert.error('Cannot Edit Job', 'The enterprise associated with this job has been deleted.')
+    return
+  }
   router.push(`/manage-jobs/edit-job/${jobId}`)
 }
 

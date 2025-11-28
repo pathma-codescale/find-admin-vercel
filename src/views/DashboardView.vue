@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router'
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { useCommonStore } from '@/store/common/useCommonStore'
@@ -76,6 +76,21 @@ const mappedJobs = computed<JobData[]>(() => {
   }))
 })
 
+watch(
+  () => jobs.value,
+  (newJobs) => {
+    jobsData.value = newJobs.map((e) => ({
+      id: e.jobId,
+      jobTitle: e.jobTitle,
+      company: e.companyName,
+      location: { locationName: e.location.locationName },
+      datePosted: e.createdAt,
+      isBanned: e.isSuspended,
+      image: e.companyLogo,
+    }))
+  },
+)
+
 const mappedEnterprises = computed<EnterpriseData[]>(() => {
   return enterprises.value.map((e) => ({
     enterpriseId: e.enterpriseId,
@@ -89,6 +104,7 @@ const mappedEnterprises = computed<EnterpriseData[]>(() => {
     isBanned: e.status !== 'ACTIVE',
   }))
 })
+
 onMounted(async () => {
   await commonStore.getDashboardMetrics()
   await commonStore.getDashboardRecentJobs({ limit: 10 })
@@ -110,10 +126,11 @@ const handleViewAllJobs = () => {
 const handleViewAllEnterprises = () => {
   router.push('/manage-users/enterprises')
 }
+
 const handleViewEnterpriseProfile = (enterpriseId: string) => {
-  console.log(enterpriseId)
   router.push(`/manage-users/enterprises/${enterpriseId}/view`)
 }
+
 const handleBanJob = async (jobId: string, isBanned: boolean) => {
   try {
     const actionText = isBanned ? 'Suspend' : 'Activate'
@@ -131,16 +148,28 @@ const handleBanJob = async (jobId: string, isBanned: boolean) => {
     if (!result.isConfirmed) return
 
     if (!jobId) {
-      SweetAlert.error('Missing Data', 'Enterprise  ID is missing.')
+      SweetAlert.error('Missing Data', 'Enterprise ID is missing.')
       return
     }
+
+    SweetAlert.loading(
+      isBanned ? 'Suspending job...' : 'Activating job...',
+      t('alerts.loading.pleaseWait'),
+    )
+
     if (!isBanned) {
       await jobStore.EnableJob(jobId)
     } else {
       await jobStore.DisableJob(jobId)
     }
 
-    await jobStore.getAllJobs()
+    await commonStore.getDashboardRecentJobs({ limit: 10 })
+
+    const jobIndex = jobsData.value.findIndex((job) => job.id === jobId)
+    if (jobIndex !== -1) {
+      jobsData.value[jobIndex].isBanned = isBanned
+    }
+
     SweetAlert.success(
       t('common.success'),
       isBanned ? 'Job suspended successfully!' : 'Job reactivated successfully!',
@@ -151,11 +180,12 @@ const handleBanJob = async (jobId: string, isBanned: boolean) => {
   }
 }
 
-const handleViewJob = (jobId: string | number) => {
+const handleViewJob = (jobId: string) => {
+  console.log(jobId)
   router.push(`/manage-jobs/view-job/${jobId}`)
 }
 
-const handleEditJob = (jobId: string | number) => {
+const handleEditJob = (jobId: string) => {
   router.push(`/manage-jobs/edit-job/${jobId}`)
 }
 
@@ -169,9 +199,13 @@ const handleDeleteJob = async (jobId: string) => {
 
   if (result.isConfirmed) {
     try {
+      SweetAlert.loading('Deleting job...', t('alerts.loading.pleaseWait'))
+
       await jobStore.deleteJob(jobId)
 
-      await jobStore.getAllJobs()
+      await commonStore.getDashboardRecentJobs({ limit: 10 })
+
+      jobsData.value = jobsData.value.filter((job) => job.id !== jobId)
 
       SweetAlert.success(t('common.success'), 'Job deleted successfully!')
     } catch (error) {

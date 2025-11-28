@@ -319,10 +319,10 @@ onMounted(() => {
               <input
                 v-model="localFilters.status"
                 type="checkbox"
-                value="active"
+                value="visible"
                 class="w-4 h-4 text-primary bg-gray-700 border-gray-600 rounded focus:ring-primary focus:ring-2"
               />
-              <span class="text-white text-sm">{{ t('filters.status.active') }}</span>
+              <span class="text-white text-sm">{{ t('filters.status.visible') }}</span>
             </label>
             <label class="flex items-center space-x-3 cursor-pointer">
               <input
@@ -333,20 +333,12 @@ onMounted(() => {
               />
               <span class="text-white text-sm">{{ t('filters.status.suspended') }}</span>
             </label>
+
             <label class="flex items-center space-x-3 cursor-pointer">
               <input
                 v-model="localFilters.status"
                 type="checkbox"
-                value="flagged"
-                class="w-4 h-4 text-primary bg-gray-700 border-gray-600 rounded focus:ring-primary focus:ring-2"
-              />
-              <span class="text-white text-sm">{{ t('filters.status.flagged') }}</span>
-            </label>
-            <label class="flex items-center space-x-3 cursor-pointer">
-              <input
-                v-model="localFilters.status"
-                type="checkbox"
-                value="hidden"
+                value="hide"
                 class="w-4 h-4 text-primary bg-gray-700 border-gray-600 rounded focus:ring-primary focus:ring-2"
               />
               <span class="text-white text-sm">{{ t('filters.status.hidden') }}</span>

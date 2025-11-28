@@ -22,6 +22,7 @@ const isLoading = loading
 const email = ref('')
 const showFilters = ref(false)
 const searchTimeout = ref<ReturnType<typeof setTimeout> | null>(null)
+const localCandidates = ref([...candidates.value])
 
 type CandidateStatus = 'active' | 'suspended' | 'flagged' | 'all' | 'hidden'
 
@@ -41,8 +42,16 @@ const filters = ref<{
   },
 })
 
+watch(
+  candidates,
+  (newCandidates) => {
+    localCandidates.value = [...newCandidates]
+  },
+  { deep: true },
+)
+
 const mappedCandidates = computed(() => {
-  return candidates.value.map((candidate) => ({
+  return localCandidates.value.map((candidate) => ({
     ...candidate,
     isBanned: candidate.status === 'SUSPENDED',
   }))
@@ -302,19 +311,29 @@ const handleBanCandidate = async (candidateId: string, isBanned: boolean) => {
       return
     }
 
+    SweetAlert.loading(
+      isSuspending
+        ? t('alerts.loading.suspendingAccount')
+        : t('alerts.loading.reactivatingAccount'),
+      t('alerts.loading.pleaseWait'),
+    )
+
     if (isSuspending) {
       await seekerStore.suspendCandidate(candidateId)
     } else {
       await seekerStore.activateCandidate(candidateId)
     }
 
-    // Refresh candidates list
     if (hasActiveFilters.value) {
       await applyFiltersToApi(filters.value)
     } else {
       await seekerStore.fetchAllCandidates({ limit: 10, page: currentPage.value })
     }
 
+    const candidateIndex = localCandidates.value.findIndex((c) => c.id === candidateId)
+    if (candidateIndex !== -1) {
+      localCandidates.value[candidateIndex].isBanned = !isSuspending
+    }
     SweetAlert.success(
       t('common.success'),
       isSuspending ? t('alerts.success.accountSuspended') : t('alerts.success.accountReactivated'),
@@ -366,9 +385,10 @@ const handleDeleteCandidate = async (candidateId: string) => {
   try {
     SweetAlert.loading(t('alerts.loading.deletingData'), t('alerts.loading.pleaseWait'))
 
+    localCandidates.value = localCandidates.value.filter((c) => c.id !== candidateId)
+
     await seekerStore.deleteCandidateById(candidateId)
 
-    // Refresh candidates list
     if (hasActiveFilters.value) {
       await applyFiltersToApi(filters.value)
     } else {
@@ -378,11 +398,15 @@ const handleDeleteCandidate = async (candidateId: string) => {
     SweetAlert.success(t('common.success'), 'Account deleted successfully!')
   } catch (error: unknown) {
     SweetAlert.error(t('common.error'), 'Failed to delete account.')
+    if (hasActiveFilters.value) {
+      await applyFiltersToApi(filters.value)
+    } else {
+      await seekerStore.fetchAllCandidates({ limit: 10, page: currentPage.value })
+    }
   }
 }
 
 onMounted(async () => {
-  // Make sure the store has a resetPagination method
   if (!seekerStore.resetPagination) {
     seekerStore.resetPagination = () => {
       seekerStore.pagination.lastEvaluatedKey = null
@@ -395,6 +419,7 @@ onMounted(async () => {
   }
 
   await seekerStore.fetchAllCandidates({ limit: 10, page: 1 })
+  localCandidates.value = [...candidates.value]
 })
 </script>
 
@@ -561,7 +586,7 @@ onMounted(async () => {
           :candidates="mappedCandidates"
           :loading="isLoading"
           :items-per-page="10"
-          :total-count="candidates.length"
+          :total-count="localCandidates.length"
           :current-page="currentPage"
           :has-next-page="pagination.hasMore"
           @ban="handleBanCandidate"

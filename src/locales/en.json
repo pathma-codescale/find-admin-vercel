@@ -542,7 +542,9 @@
       "jobUpdated": "Job offer updated successfully!",
       "draftSaved": "Draft saved successfully!",
       "adminAdded": "Admin added successfully!",
-      "adminUpdated": "Admin updated successfully!"
+      "adminUpdated": "Admin updated successfully!",
+      "accountHidden": "Account hide successfully!",
+      "accountVisible": "Account unhide successfully!"
     },
     "error": {
       "loadingData": "Failed to load {type} data. Please try again.",
@@ -551,14 +553,18 @@
       "sendingPasswordReset": "Error sending password reset email.",
       "suspendingAccount": "Error suspending account.",
       "deletingAccount": "Error deleting account.",
-      "savingDraft": "Error saving draft"
+      "savingDraft": "Error saving draft",
+      "hideAccount": "Error hiding account.",
+      "unhideAccount": "Error unhiding account."
     },
     "confirm": {
       "cancelChanges": "Are you sure you want to cancel? All unsaved changes will be lost.",
       "suspendAccount": "Are you sure you want to suspend this account?",
       "reactivateAccount": "Are you sure you want to reactivate this account?",
       "deleteAccount": "Are you sure you want to delete this account? This action cannot be undone.",
-      "deleteAccountFinal": "This will permanently delete all user data. Are you absolutely sure?"
+      "deleteAccountFinal": "This will permanently delete all user data. Are you absolutely sure?",
+      "hideAccount": "Are you sure you want to hide this account?",
+      "unhideAccount": "Are you sure you want to unhide this account?"
     },
     "loading": {
       "addingEnterprise": "Adding Enterprise...",
@@ -572,7 +578,12 @@
       "addingAdmin": "Adding Admin...",
       "updatingAdmin": "Updating Admin...",
       "sendingEmail": "Sending Email...",
-      "deletingData": "Deleting..."
+      "deletingData": "Deleting...",
+      "hidingAccount": "Hiding account...",
+      "unhidingAccount": "Unhiding account...",
+      "loadingData": "Loading data...",
+      "suspendingAccount": "Suspending account...",
+      "reactivatingAccount": "Reactivating account..."
     },
     "titles": {
       "validationError": "Validation Error",
@@ -584,7 +595,9 @@
       "reactivateAccount": "Reactivate Account",
       "deleteAccount": "Delete Account",
       "finalConfirmation": "Final Confirmation",
-      "passwordResetSent": "Password Reset Sent"
+      "passwordResetSent": "Password Reset Sent",
+      "hideAccount": "Hide Account",
+      "unhideAccount": "Unhide Account"
     },
     "buttons": {
       "continueEditing": "Continue Editing",
@@ -828,7 +841,9 @@
       "active": "Active",
       "suspended": "Suspended",
       "flagged": "Flagged",
-      "hidden": "Hidden"
+      "visible": "Visible",
+      "hidden": "Hidden",
+      "enterpriseDeleted": "Enterprise Deleted"
     },
     "subscription": {
       "all": "All Subscriptions",

@@ -318,15 +318,7 @@ const handleBanAlert = (alertId: string | number, isBanned: boolean) => {
   // Call API: updateAlertStatus(alertId, { isBanned })
 }
 
-const handleViewAlert = (alertId: string | number, isViewed: boolean) => {
-  console.log(`Alert ${alertId} view subscription changed to:`, isViewed)
-
-  const alertIndex = alertsData.value.findIndex((alert) => alert.alertId === alertId)
-  if (alertIndex !== -1) {
-    alertsData.value[alertIndex].isViewed = isViewed
-    filterAndSearchAlerts() // Re-apply filters and search
-  }
-
+const handleViewAlert = (alertId: string) => {
   // Call API: updateAlertStatus(alertId, { isViewed })
 }
 

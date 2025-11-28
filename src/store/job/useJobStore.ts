@@ -60,7 +60,7 @@ export const useJobStore = defineStore('job', {
 
         const processedJobs = jobs.map((e: any) => ({
           ...e,
-          // status: e.status ? e.status.toLowerCase() : 'active',
+          // status: e.status ? e.status.toLowerCase() : 'visible',
           isBanned: false,
           isViewed: false,
         }))
@@ -250,7 +250,7 @@ export const useJobStore = defineStore('job', {
         const response = await DisableJobApi(jobId)
 
         this.jobs = this.jobs.filter((c) => c.id !== jobId)
-        console.log(response)
+
         return response
       } catch (error: any) {
         console.error('Error deleting candidate:', error)

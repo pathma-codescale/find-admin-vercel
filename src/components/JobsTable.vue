@@ -13,7 +13,7 @@ interface JobData {
   }
   datePosted: string | Date
   contractTypes: string[]
-  status: 'active' | 'suspended' | 'flagged' | 'hidden' | 'enterprise_deleted' | string
+  status: 'suspended' | 'hide' | 'enterprise_deleted' | 'visible' | string
   isBanned?: boolean
   isViewed?: boolean
   image?: string
@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   ban: [jobId: string, isBanned: boolean]
-  view: [jobId: string, isViewed: boolean]
+  view: [jobId: string]
   edit: [jobId: string]
   delete: [jobId: string]
   'page-change': [page: number]
@@ -48,16 +48,15 @@ const emit = defineEmits<{
 const statusFilter = ref('')
 
 const filteredJobs = computed(() => {
-  let filtered = props.jobs
-
-  if (statusFilter.value) {
-    filtered = filtered.filter((job) => job.status === statusFilter.value)
+  if (!statusFilter.value) {
+    return props.jobs
   }
 
-  return filtered
+  return props.jobs.filter((job) => job.status === statusFilter.value)
 })
 
-const paginatedJobs = computed(() => props.jobs || [])
+// Use filteredJobs instead of directly using props.jobs
+const paginatedJobs = computed(() => filteredJobs.value)
 
 const formatDate = (date: string | Date) => {
   const d = new Date(date)
@@ -76,12 +75,11 @@ const formatLocation = (locationName: string) => {
 }
 
 const handleBan = (jobId: string, isBanned: boolean) => {
-  console.log(isBanned)
   emit('ban', jobId, isBanned)
 }
 
-const handleView = (jobId: string, isViewed: boolean) => {
-  emit('view', jobId, isViewed)
+const handleView = (jobId: string) => {
+  emit('view', jobId)
 }
 
 const handleEdit = (jobId: string) => {
@@ -118,8 +116,8 @@ const loadPreviousPage = () => {
           <option value="">All Status</option>
           <option value="active">Active</option>
           <option value="suspended">Suspended</option>
-          <option value="flagged">Flagged</option>
           <option value="hidden">Hidden</option>
+          <option value="enterprise_deleted">Enterprise Deleted</option>
         </select>
       </div>
     </div>

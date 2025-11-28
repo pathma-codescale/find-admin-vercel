@@ -262,12 +262,12 @@ const openCrashAnalytics = () => {
             @click="setActive('jobs')"
           />
 
-          <SidebarItem
+          <!-- <SidebarItem //TODO
             :icon="AlertCircleIcon"
             :label="t('leftPanel.manageAlerts')"
             :active="activeItem === 'alerts'"
             @click="setActive('alerts')"
-          />
+          /> -->
 
           <!-- <SidebarItem
             :icon="FileTextIcon"

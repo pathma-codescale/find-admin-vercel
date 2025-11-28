@@ -205,7 +205,7 @@ export const conditionOptionsBase = [
   { value: 'team_building', labelKey: 'teamBuilding' },
   { value: 'primes', labelKey: 'bonuses' },
   { value: 'epargne', labelKey: 'savings' },
-  { value: 'voiture_fonction', labelKey: 'compunknownVehicle' },
+  // { value: 'voiture_fonction', labelKey: 'compunknownVehicle' },
   { value: 'salle_sport', labelKey: 'gym' },
 ] as const
 

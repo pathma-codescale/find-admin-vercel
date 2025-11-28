@@ -25,8 +25,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   ban: [id: string, isBanned: boolean]
-  view: [id: string | number, isViewed: boolean]
-  edit: [id: string | number]
+  view: [id: string]
+  edit: [id: string]
   delete: [id: string]
 }>()
 
@@ -52,11 +52,11 @@ const handleBan = (id: string, isBanned: boolean) => {
   emit('ban', id, isBanned)
 }
 
-const handleView = (id: string | number, isViewed: boolean) => {
-  emit('view', id, isViewed)
+const handleView = (id: string) => {
+  emit('view', id)
 }
 
-const handleEdit = (id: string | number) => {
+const handleEdit = (id: string) => {
   emit('edit', id)
 }
 

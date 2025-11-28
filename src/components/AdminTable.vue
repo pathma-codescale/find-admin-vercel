@@ -59,35 +59,6 @@ const paginatedadmins = computed(() => {
   return filteredadmins.value.slice(start, end)
 })
 
-// const visiblePages = computed(() => {
-//   const pages: number[] = []
-//   const total = totalPages.value
-//   const current = currentPage.value
-//   if (total <= 7) {
-//     for (let i = 1; i <= total; i++) pages.push(i)
-//   } else {
-//     if (current <= 4) {
-//       for (let i = 1; i <= 5; i++) pages.push(i)
-//       if (total > 5) pages.push(total)
-//     } else if (current >= total - 3) {
-//       pages.push(1)
-//       for (let i = total - 4; i <= total; i++) if (i > 1) pages.push(i)
-//     } else {
-//       pages.push(1)
-//       for (let i = current - 1; i <= current + 1; i++) if (i > 1 && i < total) pages.push(i)
-//       pages.push(total)
-//     }
-//   }
-//   return [...new Set(pages)].sort((a, b) => a - b)
-// })
-
-// const maxVisibleContracts = 3
-// const toggleContracts = (adminId: string) => {
-//   showContractsMap.value[adminId] = !showContractsMap.value[adminId]
-// }
-
-// const showContractsMap = ref<Record<string, boolean>>({})
-
 const formatDate = (date: string | Date) => {
   const d = new Date(date)
   return d.toLocaleDateString('en-US', {
@@ -97,14 +68,7 @@ const formatDate = (date: string | Date) => {
   })
 }
 
-// const formatLocation = (locationName: string) => {
-//   if (!locationName) return ''
-//   const parts = locationName.split(',').map((p) => p.trim())
-//   if (parts.length <= 2) return locationName
-//   return `${parts[0]}, ${parts[1]}`
-// }
-
-const handleBan = (adminEmail: string, adminId: string, isBanned: boolean) => {
+const handleBan = (adminId: string, isBanned: boolean) => {
   emit('ban', adminId, isBanned)
 }
 const handleView = (adminId: string | number) => {

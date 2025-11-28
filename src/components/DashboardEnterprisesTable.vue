@@ -61,60 +61,6 @@ const paginatedEnterprises = computed(() => {
   const end = start + props.itemsPerPage
   return filteredEnterprises.value.slice(start, end)
 })
-
-// const totalPages = computed(() =>
-//     Math.ceil(filteredEnterprises.value.length / props.itemsPerPage)
-// )
-
-// const visiblePages = computed(() => {
-//     const pages: number[] = []
-//     const total = totalPages.value
-//     const current = currentPage.value
-
-//     if (total <= 7) {
-//         for (let i = 1; i <= total; i++) {
-//             pages.push(i)
-//         }
-//     } else {
-//         if (current <= 4) {
-//             for (let i = 1; i <= 5; i++) {
-//                 pages.push(i)
-//             }
-//             if (total > 5) pages.push(total)
-//         } else if (current >= total - 3) {
-//             pages.push(1)
-//             for (let i = total - 4; i <= total; i++) {
-//                 if (i > 1) pages.push(i)
-//             }
-//         } else {
-//             pages.push(1)
-//             for (let i = current - 1; i <= current + 1; i++) {
-//                 if (i > 1 && i < total) pages.push(i)
-//             }
-//             pages.push(total)
-//         }
-//     }
-
-//     return [...new Set(pages)].sort((a, b) => a - b)
-// })
-
-// const maxVisibleSectors = 3
-// const showSectorsMap = ref<Record<string, boolean>>({})
-
-// const toggleSectors = (enterpriseId: string) => {
-//     showSectorsMap.value[enterpriseId] = !showSectorsMap.value[enterpriseId]
-// }
-
-// const formatLocation = (locationName?: string) => {
-//     if (!locationName) return 'N/A'
-//     const parts = locationName.split(',').map(p => p.trim())
-//     if (parts.length <= 2) return locationName
-//     return `${parts[0]}, ${parts[1]}`
-// }
-
-// const getActiveJobsCount = (jobs?: Job[]) => {
-//     return jobs?.length || 0
-// }
 </script>
 
 <template>

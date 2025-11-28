@@ -89,18 +89,6 @@ const formData = reactive<FormData>({
 const contractTypeOptions = getContractOptions(t)
 const workingTimeOptions = getWorkingTimeOptions(t)
 
-const handleCustomInterestAdd = (customInterest: string) => {
-  console.log('Custom interest added:', customInterest)
-}
-
-const handleCustomSkillAdd = (customSkill: string) => {
-  console.log('Custom skill added:', customSkill)
-}
-
-const handleCustomQualityAdd = (customQuality: string) => {
-  console.log('Custom quality added:', customQuality)
-}
-
 const skillsWithLabels = computed(() => {
   const skillsMap = predefinedSkills.reduce((acc: Record<string, string>, skill: any) => {
     acc[skill.value] = skill.label
@@ -158,11 +146,17 @@ const qualitiesWithLabels = computed(() => {
   })
 })
 
-onMounted(async () => {
-  if ((isEditMode.value || isViewOnly.value) && route.params.id) {
-    await loadCandidateData(route.params.id as string)
-  }
-})
+const handleCustomInterestAdd = (customInterest: string) => {
+  console.log('Custom interest added:', customInterest)
+}
+
+const handleCustomSkillAdd = (customSkill: string) => {
+  console.log('Custom skill added:', customSkill)
+}
+
+const handleCustomQualityAdd = (customQuality: string) => {
+  console.log('Custom quality added:', customQuality)
+}
 
 const loadCandidateData = async (candidateId: string) => {
   try {
@@ -240,6 +234,7 @@ const handleFileChange = async (event: Event) => {
       throw new Error('Signed URL or final file URL missing from backend response')
     }
 
+    SweetAlert.loading(`Uploading...`, t('alerts.loading.pleaseWait'))
     await commonStore.uploadFileToPresignedUrl(signUrl, file, file.type, (progress) => {
       console.log(`Upload progress: ${progress}%`)
     })
@@ -247,6 +242,7 @@ const handleFileChange = async (event: Event) => {
     formData.profilePicture = objectUrl
 
     profilePicturePreview.value = objectUrl
+    SweetAlert.success(t('common.success'), 'Image uploaded successfully!')
   } catch (error: any) {
     console.error('Error uploading profile picture:', error)
     alert('Failed to upload profile picture. Please try again.')
@@ -305,24 +301,31 @@ const validateForm = (): boolean => {
 
 const sendPasswordReset = async () => {
   if (!formData.emailAddress) {
-    toast('Candidate email address is missing.')
+    SweetAlert.error(t('common.error'), 'Candidate email address is missing.')
     return
   }
 
-  if (!confirm(`Send a password reset email to ${formData.emailAddress}?`)) return
+  const result = await SweetAlert.confirm(
+    t('candidate.resetPassword'),
+    `Send a password reset email to ${formData.emailAddress}?`,
+    t('common.yes'),
+    t('common.cancel'),
+  )
+
+  if (!result.isConfirmed) return
 
   try {
     await seekerStore.sendResetPasswordEmailCandidate(formData.emailAddress)
-    toast.success('Password reset email sent successfully!')
+    SweetAlert.success(t('common.success'), t('alerts.success.passwordResetSent'))
   } catch (error: any) {
     console.error('Error sending password reset:', error)
-    toast.error(error.message || 'Failed to send password reset email.')
+    SweetAlert.error(t('common.error'), error.message || 'Failed to send password reset email.')
   }
 }
 
 const toggleSuspendAccount = async (candidateId: string) => {
   const suspended = formData.status === 'suspended'
-  console.log(formData)
+
   const action = suspended ? 'activate' : 'suspend'
   const confirmText =
     action === 'suspend'
@@ -357,24 +360,39 @@ const toggleSuspendAccount = async (candidateId: string) => {
   }
 }
 
-const confirmDeleteAccount = () => {
-  if (confirm('Are you sure you want to delete this account? This action cannot be undone.')) {
-    if (confirm('This will permanently delete all user data. Are you absolutely sure?')) {
-      deleteAccount()
-    }
+const confirmDeleteAccount = async () => {
+  const result = await SweetAlert.confirm(
+    t('candidate.deleteAccount'),
+    'Are you sure you want to delete this account? This action cannot be undone.',
+    t('common.yes'),
+    t('common.cancel'),
+  )
+
+  if (!result.isConfirmed) return
+
+  const finalConfirm = await SweetAlert.confirm(
+    'Final Confirmation',
+    'This will permanently delete all enterprise data. Are you absolutely sure?',
+    'Yes, Delete Permanently',
+    t('common.cancel'),
+  )
+
+  if (finalConfirm.isConfirmed) {
+    await deleteAccount()
   }
 }
 
 const deleteAccount = async () => {
   const candidateId = route.params.id as string
   if (!candidateId) {
-    toast.error('Candidate ID not found.')
+    SweetAlert.error(t('common.error'), 'Candidate ID not found.')
     return
   }
 
   try {
+    SweetAlert.loading(t('alerts.loading.deletingData'), t('alerts.loading.pleaseWait'))
     await seekerStore.deleteCandidateById(candidateId)
-    toast.success('Account deleted successfully!')
+    SweetAlert.success(t('common.success'), 'Account deleted successfully!')
     router.push('/manage-users/candidates')
   } catch (error: unknown) {
     const axiosError = error as AxiosError<{ message?: string }>
@@ -424,16 +442,22 @@ const submitForm = async () => {
       days: [],
       schedules: [],
     }
-
+    SweetAlert.loading(
+      isEditMode.value
+        ? t('alerts.loading.updatingCandidate')
+        : t('alerts.loading.addingCandidate'),
+      t('alerts.loading.pleaseWait'),
+    )
     if (isEditMode.value && formData.candidateId) {
       await seekerStore.updateCandidate(payload)
     } else {
       const newCandidate = await seekerStore.createCandidate(payload)
       console.log('New candidate created:', newCandidate)
     }
-    SweetAlert.success(t('common.success'), t('alerts.success.enterpriseAdded')).then(() =>
-      router.push('/manage-users/candidates'),
-    )
+    SweetAlert.success(
+      t('common.success'),
+      isEditMode.value ? t('alerts.success.candidateUpdated') : t('alerts.success.candidateAdded'),
+    ).then(() => router.push('/manage-users/candidates'))
   } catch (error: unknown) {
     const axiosError = error as AxiosError<{ message: string }>
 
@@ -446,36 +470,66 @@ const submitForm = async () => {
 }
 
 const toggleHideCandidate = async (candidateId: string) => {
-  const candidate = seekerStore.candidates.find((c) => c.id === candidateId)
-  if (!candidate) return toast.error('Candidate not found')
+  const candidate = formData
+
+  if (!candidate) {
+    SweetAlert.error('Missing Data', 'Candidate not found')
+    return
+  }
 
   const isHidden = candidate.status === 'hidden'
-  const action = isHidden ? 'unhide' : 'hide'
 
-  if (confirm(`Are you sure you want to ${action} this candidate?`)) {
-    try {
-      candidate.status = isHidden ? 'active' : 'hidden'
+  const actionText = isHidden ? t('alerts.titles.unhideAccount') : t('alerts.titles.hideAccount')
+  const confirmText = isHidden ? t('alerts.confirm.unhideAccount') : t('alerts.confirm.hideAccount')
 
-      if (isHidden) {
-        await seekerStore.displayCandidate(candidateId)
-        toast.success('Candidate is now visible again')
-      } else {
-        await seekerStore.hideCandidate(candidateId)
-        toast.success('Candidate is now hidden')
-      }
-    } catch (err) {
-      console.error(err)
-      candidate.status = isHidden ? 'hidden' : 'active'
-      toast.error(`Failed to ${action} candidate`)
+  const result = await SweetAlert.confirm(
+    `${actionText}`,
+    confirmText,
+    t('common.yes'),
+    t('common.cancel'),
+  )
+  if (!result.isConfirmed) return
+
+  try {
+    candidate.status = isHidden ? 'active' : 'hidden'
+
+    if (isHidden) {
+      SweetAlert.loading(t('alerts.loading.unhidingAccount'), t('alerts.loading.pleaseWait'))
+      await seekerStore.displayCandidate(candidateId)
+    } else {
+      SweetAlert.loading(t('alerts.loading.hidingAccount'), t('alerts.loading.pleaseWait'))
+
+      await seekerStore.hideCandidate(candidateId)
     }
+    SweetAlert.success(
+      t('common.success'),
+      isHidden ? t('alerts.success.accountVisible') : t('alerts.success.accountHidden'),
+    )
+  } catch (err) {
+    console.error(err)
+    candidate.status = isHidden ? 'hidden' : 'active'
+    SweetAlert.error(
+      t('common.error'),
+      isHidden ? t('alerts.error.hideAccount') : t('alerts.error.unhideAccount'),
+    )
   }
 }
 
-const cancelForm = () => {
-  if (confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
-    router.push('/manage-users/candidates')
-  }
+const cancelForm = async () => {
+  const result = await SweetAlert.confirm(
+    t('alerts.titles.cancelChanges'),
+    t('alerts.confirm.cancelChanges'),
+    t('alerts.buttons.yesCancel'),
+    t('alerts.buttons.continueEditing'),
+  )
+  if (result.isConfirmed) router.push('/manage-users/candidates')
 }
+
+onMounted(async () => {
+  if ((isEditMode.value || isViewOnly.value) && route.params.id) {
+    await loadCandidateData(route.params.id as string)
+  }
+})
 </script>
 
 <template>
@@ -737,7 +791,7 @@ const cancelForm = () => {
                   :searchable="true"
                   :allow-custom="true"
                   :show-tags="true"
-                  :no-options-text="$t('candidate.noOptionsFound')"
+                  :no-options-text="$t('candidate.noOptionsFound.interests')"
                   tag-background-color="#EC4899"
                   @add-custom="handleCustomInterestAdd"
                   @update:model-value="
@@ -762,7 +816,7 @@ const cancelForm = () => {
                   :searchable="true"
                   :allow-custom="true"
                   :show-tags="true"
-                  :no-options-text="$t('candidate.noSkillsFound')"
+                  :no-options-text="$t('candidate.noOptionsFound.skills')"
                   tag-background-color="#2563EB"
                   @add-custom="handleCustomSkillAdd"
                   @update:model-value="
@@ -789,7 +843,7 @@ const cancelForm = () => {
                   :searchable="true"
                   :allow-custom="true"
                   :show-tags="true"
-                  :no-options-text="$t('candidate.noOptionsFound')"
+                  :no-options-text="$t('candidate.noOptionsFound.qualities')"
                   tag-background-color="#059669"
                   @add-custom="handleCustomQualityAdd"
                   @update:model-value="
@@ -1058,23 +1112,6 @@ const cancelForm = () => {
               {{ isEditMode ? $t('common.saveChanges') : $t('candidate.addCandidate') }}
             </button>
           </div>
-          <!-- <div class="flex justify-end space-x-4">
-            <button
-              @click="cancelForm"
-              type="button"
-              class="px-6 py-2 border border-gray-600 text-gray-300 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
-            >
-              {{ $t('common.cancel') }}
-            </button>
-
-            <button
-              v-if="isEditMode"
-              type="submit"
-              class="px-6 py-2 bg-primary text-white rounded-md hover:bg-primaryDark focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
-            >
-              {{ isEditMode ? $t('common.saveChanges') : $t('candidate.addCandidate') }}
-            </button>
-          </div> -->
         </form>
       </div>
     </div>

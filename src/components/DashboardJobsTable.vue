@@ -32,8 +32,8 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   viewAll: []
   ban: [jobId: string, isBanned: boolean]
-  view: [jobId: string | number, isViewed: boolean]
-  edit: [jobId: string | number]
+  view: [jobId: string]
+  edit: [jobId: string]
   delete: [jobId: string]
 }>()
 
@@ -54,11 +54,11 @@ const handleBan = (jobId: string, isBanned: boolean) => {
   emit('ban', jobId, isBanned)
 }
 
-const handleView = (jobId: string | number, isViewed: boolean) => {
-  emit('view', jobId, isViewed)
+const handleView = (jobId: string) => {
+  emit('view', jobId)
 }
 
-const handleEdit = (jobId: string | number) => {
+const handleEdit = (jobId: string) => {
   emit('edit', jobId)
 }
 
@@ -125,7 +125,7 @@ const handleDelete = (jobId: string) => {
           :date="job.datePosted"
           :is-banned="job.isBanned"
           :is-viewed="job.isViewed"
-          class="p-1 border-0 border-b border-black dark:border-white last:border-b-0 rounded-none"
+          class="p-1 border-0 border-b border-black dark:border-white last:border-b rounded-none"
           @ban="handleBan"
           @view="handleView"
           @edit="handleEdit"

@@ -14,20 +14,17 @@ import Breadcrumb from '@/components/Breadcrumb.vue'
 import MultiSelectDropdown from '@/components/MultiSelectDropdown.vue'
 import ImageCropper from '@/components/ImageCropper.vue'
 
-/** --- i18n / router / store --- */
 const { t } = useI18n()
 const router = useRouter()
 const route = useRoute()
 const enterpriseStore = useEnterpriseStore()
 const commonStore = useCommonStore()
 
-/** --- refs --- */
 const logoInput = ref<HTMLInputElement | null>(null)
 const companyLogoPreview = ref<string>('')
 const showCropper = ref(false)
 const tempImageUrl = ref('')
 
-/** --- mode detection --- */
 const mode = computed<'create' | 'edit' | 'view'>(() => {
   if (route.name === 'view-enterprise') return 'view'
   if (route.params.id) return 'edit'
@@ -37,7 +34,6 @@ const isViewOnly = computed(() => route.path.includes('/view'))
 
 const isEditMode = computed(() => mode.value === 'edit')
 
-/** --- form model --- */
 interface FormData {
   companyName: string
   emailAddress: string
@@ -76,7 +72,6 @@ const formData = reactive<FormData>({
   status: 'active',
 })
 
-/** --- options --- */
 const availableBusinessSectors = getDomainOptions(t)
 
 const businessSectorsWithLabels = computed(() => {
@@ -98,7 +93,6 @@ const businessSectorsWithLabels = computed(() => {
   })
 })
 
-/** --- logo handlers --- */
 const handleLogoUpload = () => {
   if (!isViewOnly.value) {
     logoInput.value?.click()
@@ -123,7 +117,6 @@ const handleLogoChange = async (event: Event) => {
     return
   }
 
-  // Show cropper with temp URL
   tempImageUrl.value = URL.createObjectURL(file)
   showCropper.value = true
 }
@@ -208,12 +201,10 @@ const removeCompanyLogo = async () => {
   }
 }
 
-/** --- custom sector add --- */
 const handleCustomSectorAdd = (customSector: string) => {
   if (!formData.businessSectors.includes(customSector)) formData.businessSectors.push(customSector)
 }
 
-/** --- load enterprise --- */
 const loadEnterpriseData = async (enterpriseId: string) => {
   try {
     console.info('Loading enterprise id:', enterpriseId)
@@ -258,7 +249,6 @@ const loadEnterpriseData = async (enterpriseId: string) => {
   }
 }
 
-/** --- validation --- */
 const validateForm = () => {
   if (!formData.companyName?.trim()) {
     SweetAlert.validation.required(t('enterprise.companyName'))
@@ -275,7 +265,6 @@ const validateForm = () => {
   return true
 }
 
-/** --- password reset --- */
 const sendPasswordReset = async () => {
   if (!formData.emailAddress) {
     SweetAlert.error(t('common.error'), 'Enterprise email address is missing.')
@@ -293,14 +282,13 @@ const sendPasswordReset = async () => {
 
   try {
     await enterpriseStore.sendResetPasswordEmailEnterprise(formData.emailAddress)
-    SweetAlert.success(t('common.success'), 'Password reset email sent successfully!')
+    SweetAlert.success(t('common.success'), t('alerts.success.passwordResetSent'))
   } catch (error: any) {
     console.error('Error sending password reset:', error)
     SweetAlert.error(t('common.error'), error.message || 'Failed to send password reset email.')
   }
 }
 
-/** --- suspend/activate account --- */
 const toggleAccountSuspension = async () => {
   try {
     const isSuspending = !formData.isAccountSuspended
@@ -322,7 +310,7 @@ const toggleAccountSuspension = async () => {
     const enterpriseId = formData.enterpriseId
 
     if (!enterpriseId) {
-      SweetAlert.error('Missing Data', 'Enterprise email or ID is missing.')
+      SweetAlert.error('Missing Data', 'Enterprise ID is missing.')
       return
     }
 
@@ -346,14 +334,12 @@ const toggleAccountSuspension = async () => {
   }
 }
 
-/** --- delete account --- */
 const confirmDeleteAccount = async () => {
   const result = await SweetAlert.confirm(
     t('enterprise.deleteAccount'),
     'Are you sure you want to delete this account? This action cannot be undone.',
     t('common.yes'),
     t('common.cancel'),
-    // 'warning'
   )
 
   if (!result.isConfirmed) return
@@ -363,7 +349,6 @@ const confirmDeleteAccount = async () => {
     'This will permanently delete all enterprise data. Are you absolutely sure?',
     'Yes, Delete Permanently',
     t('common.cancel'),
-    // 'error'
   )
 
   if (finalConfirm.isConfirmed) {
@@ -450,7 +435,6 @@ const submitForm = async () => {
   }
 }
 
-/** --- cancel --- */
 const cancelForm = async () => {
   const result = await SweetAlert.confirm(
     t('alerts.titles.cancelChanges'),
@@ -458,10 +442,9 @@ const cancelForm = async () => {
     t('alerts.buttons.yesCancel'),
     t('alerts.buttons.continueEditing'),
   )
-  if (result.isConfirmed) router.push('/enterprises')
+  if (result.isConfirmed) router.push('/manage-users/enterprises')
 }
 
-/** --- mounted --- */
 onMounted(() => {
   try {
     if (mode.value !== 'create' && route.params.id) {

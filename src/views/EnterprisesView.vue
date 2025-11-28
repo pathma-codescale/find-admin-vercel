@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useEnterpriseStore } from '@/store/enterprise/useEnterpriseStore'
@@ -33,12 +33,15 @@ interface EnterpriseData {
   isBanned?: boolean
   isViewed?: boolean
   dateJoined?: string
+  status?: string
 }
 
 const isLoading = loading
 const email = ref('')
 const showFilters = ref(false)
 const searchTimeout = ref<ReturnType<typeof setTimeout> | null>(null)
+const localEnterprises = ref<EnterpriseData[]>([])
+const forceRender = ref(0)
 
 const filters = ref({
   sortBy: 'newest',
@@ -51,20 +54,32 @@ const filters = ref({
   email: '',
 })
 
+watch(
+  enterprises,
+  (newEnterprises) => {
+    localEnterprises.value = newEnterprises.map((e) => ({
+      enterpriseId: e.enterpriseId,
+      email: e.email || '',
+      logo: e.logo || '',
+      brand_name: e.brand_name || '',
+      activeJobs: e.jobsCount?.active || 0,
+      businessLocation: {
+        locationName: e.businessLocation?.locationName || '',
+      },
+      businessSector: e.businessSector || [],
+      subscription: (e.subscriptionStatus as 'subscribed' | 'expired' | 'trial') || 'trial',
+      subscriptionStatus: e.subscriptionStatus || '',
+      dateJoined: e.created_at || '',
+      isBanned: e.status === 'SUSPENDED',
+      status: e.status,
+    }))
+  },
+  { deep: true, immediate: true },
+)
+
 const mappedEnterprises = computed<EnterpriseData[]>(() => {
-  return enterprises.value.map((e) => ({
-    enterpriseId: e.enterpriseId,
-    email: e.email || '',
-    logo: e.logo || '',
-    brand_name: e.brand_name || '',
-    activeJobs: e.jobsCount?.active || 0,
-    businessLocation: {
-      locationName: e.businessLocation?.locationName || '',
-    },
-    businessSector: e.businessSector || [],
-    subscription: (e.subscriptionStatus as 'subscribed' | 'expired' | 'trial') || 'trial',
-    subscriptionStatus: e.subscriptionStatus || '',
-    dateJoined: e.created_at || '',
+  return localEnterprises.value.map((e) => ({
+    ...e,
     isBanned: e.status === 'SUSPENDED',
   }))
 })
@@ -240,12 +255,6 @@ const applyFilters = async (newFilters: any) => {
   filters.value = { ...newFilters }
 
   await applyFiltersToApi(newFilters)
-  // enterpriseStore.resetPagination()
-
-  // await enterpriseStore.getAllEnterprises({
-  //   page: 1,
-  //   ...buildFilterParams(),
-  // })
 }
 
 const resetFilters = async () => {
@@ -351,20 +360,41 @@ const handleBanEnterprise = async (enterpriseId: string, isBanned: boolean) => {
     if (!result.isConfirmed) return
 
     if (!enterpriseId) {
-      SweetAlert.error('Missing Data', 'Enterprise  ID is missing.')
+      SweetAlert.error('Missing Data', 'Enterprise ID is missing.')
       return
+    }
+
+    SweetAlert.loading(
+      isSuspending
+        ? t('alerts.loading.suspendingAccount')
+        : t('alerts.loading.reactivatingAccount'),
+      t('alerts.loading.pleaseWait'),
+    )
+
+    const enterpriseIndex = localEnterprises.value.findIndex((e) => e.enterpriseId === enterpriseId)
+    if (enterpriseIndex !== -1) {
+      const updatedEnterprise = { ...localEnterprises.value[enterpriseIndex] }
+      updatedEnterprise.status = isSuspending ? 'SUSPENDED' : 'ACTIVE'
+      updatedEnterprise.isBanned = isSuspending
+      localEnterprises.value[enterpriseIndex] = updatedEnterprise
+
+      forceRender.value++
     }
 
     if (isSuspending) {
       await enterpriseStore.disableEnterprise(enterpriseId)
-      isBanned = true
-      // formData.status = 'suspended'
     } else {
       await enterpriseStore.enableEnterprise(enterpriseId)
-      isBanned = false
-      // formData.status = 'active'
     }
-    await enterpriseStore.getAllEnterprises()
+
+    if (hasActiveFilters.value) {
+      await applyFiltersToApi(filters.value)
+    } else {
+      await enterpriseStore.getAllEnterprises({ page: currentPage.value })
+    }
+
+    await nextTick()
+    forceRender.value++
 
     SweetAlert.success(
       t('common.success'),
@@ -373,6 +403,14 @@ const handleBanEnterprise = async (enterpriseId: string, isBanned: boolean) => {
   } catch (err) {
     console.error('Error toggling suspension:', err)
     SweetAlert.error(t('common.error'), t('alerts.error.suspendingAccount'))
+
+    if (hasActiveFilters.value) {
+      await applyFiltersToApi(filters.value)
+    } else {
+      await enterpriseStore.getAllEnterprises({ page: currentPage.value })
+    }
+
+    forceRender.value++
   }
 }
 
@@ -396,7 +434,7 @@ const confirmDeleteAccount = async (enterpriseId: string) => {
 
   const finalConfirm = await SweetAlert.confirm(
     'Final Confirmation',
-    'This will permanently delete this admin account. Are you absolutely sure?',
+    'This will permanently delete this enterprise account. Are you absolutely sure?',
     'Yes, Delete Permanently',
     t('common.cancel'),
   )
@@ -408,25 +446,63 @@ const confirmDeleteAccount = async (enterpriseId: string) => {
 
 const handleDeleteEnterprise = async (enterpriseId: string) => {
   if (!enterpriseId) {
-    SweetAlert.error(t('common.error'), 'Admin ID not found.')
+    SweetAlert.error(t('common.error'), 'Enterprise ID not found.')
     return
   }
 
   try {
     SweetAlert.loading(t('alerts.loading.deletingData'), t('alerts.loading.pleaseWait'))
 
+    localEnterprises.value = localEnterprises.value.filter((e) => e.enterpriseId !== enterpriseId)
+
+    forceRender.value++
+
     await enterpriseStore.deleteEnterprise(enterpriseId)
 
-    await enterpriseStore.getAllEnterprises()
+    if (hasActiveFilters.value) {
+      await applyFiltersToApi(filters.value)
+    } else {
+      await enterpriseStore.getAllEnterprises({ page: currentPage.value })
+    }
+
+    await nextTick()
+    forceRender.value++
 
     SweetAlert.success(t('common.success'), 'Account deleted successfully!')
   } catch (error: unknown) {
     SweetAlert.error(t('common.error'), 'Failed to delete account.')
+
+    if (hasActiveFilters.value) {
+      await applyFiltersToApi(filters.value)
+    } else {
+      await enterpriseStore.getAllEnterprises({ page: currentPage.value })
+    }
+
+    forceRender.value++
   }
 }
 
 onMounted(async () => {
   await enterpriseStore.getAllEnterprises({ page: 1 })
+
+  localEnterprises.value = enterprises.value.map((e) => ({
+    enterpriseId: e.enterpriseId,
+    email: e.email || '',
+    logo: e.logo || '',
+    brand_name: e.brand_name || '',
+    activeJobs: e.jobsCount?.active || 0,
+    businessLocation: {
+      locationName: e.businessLocation?.locationName || '',
+    },
+    businessSector: e.businessSector || [],
+    subscription: (e.subscriptionStatus as 'subscribed' | 'expired' | 'trial') || 'trial',
+    subscriptionStatus: e.subscriptionStatus || '',
+    dateJoined: e.created_at || '',
+    isBanned: e.status === 'SUSPENDED',
+    status: e.status,
+  }))
+
+  forceRender.value++
 })
 </script>
 
@@ -618,6 +694,7 @@ onMounted(async () => {
 
         <!-- Enterprises Table -->
         <EnterprisesTable
+          :key="forceRender"
           :enterprises="filteredEnterprises"
           :loading="isLoading"
           :items-per-page="10"

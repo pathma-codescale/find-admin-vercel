@@ -24,38 +24,11 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   ban: [id: string, isBanned: boolean]
-  view: [id: string, isViewed: boolean]
+  view: [id: string]
   edit: [id: string]
   delete: [id: string]
   color?: string
 }>()
-
-// const actions = computed(() => [
-//   {
-//     type: 'ban' as const,
-//     icon: banIcon,
-//     title: props.isBanned ? 'Unban' : 'Ban',
-//     isActive: props.isBanned
-//   },
-//   {
-//     type: 'view' as const,
-//     icon: props.isViewed ? eyeOffIcon : eyeOpenIcon,
-//     title: props.isViewed ? 'Hide' : 'View',
-//     isActive: props.isViewed
-//   },
-//   {
-//     type: 'edit' as const,
-//     icon: editIcon,
-//     title: 'Edit',
-//     isActive: false
-//   },
-//   {
-//     type: 'delete' as const,
-//     icon: deleteIcon,
-//     title: 'Delete',
-//     isActive: false
-//   }
-// ])
 
 const actions = computed(() => [
   {
